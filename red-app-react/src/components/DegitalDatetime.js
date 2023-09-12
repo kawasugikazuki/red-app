@@ -14,7 +14,7 @@ const DigitalDateTime = () =>{
             let month = d.getMonth()+1;
             let day = d.getDate();
             let dayofweek = d.getDay();
-            setDate(year+"年"+month+"月"+day+"日["+weekday[dayofweek]+"]");
+            setDate(year+"年"+month+"月"+day+"日["+ weekday[dayofweek] +"曜日]");
             let hour = d.getHours().toString().padStart(2,"0");
             let minute = d.getMinutes().toString().padStart(2,"0");
             let seconds = d.getSeconds().toString().padStart(2,"0");
@@ -24,8 +24,9 @@ const DigitalDateTime = () =>{
 
 
     return(
-    <div classname="Digit">
-        <p class="digit">{date}<span>{time}</span></p>
+    <div className="Digit" style={{textAlign:"center"}} >
+        <p className="digitdata">{date}</p>
+        <p className="digittime">{time}</p>
     </div>
     );
 }

@@ -1,20 +1,20 @@
 import React from "react";
-import {BsArrowUp} from "react-icons/bs";
-import {BsArrowCounterclockwise} from "react-icons/bs";
-import {BsArrowDown} from "react-icons/bs";
-import {BsArrowClockwise} from "react-icons/bs";
+import {BsArrowUp,BsArrowCounterclockwise,BsPause,BsArrowClockwise,BsArrow90DegRight,BsArrow90DegLeft} from "react-icons/bs";
+import radiconstyle from"./Radicon_Mode.css";
 
 class Radicon extends React.Component{
     render(){
         return(
             <div>
                 <h1>**Radicon Control Mode**</h1>
-                <h1>Server's IP address : </h1>
-                <button><BsArrowUp /></button>
-                <div>
-                    <button><BsArrowCounterclockwise /></button>
-                    <button><BsArrowDown /></button>
-                    <button><BsArrowClockwise /></button>
+                <h2>Server's IP address : </h2>
+                <button className="Arrow" ><BsArrow90DegLeft/></button>
+                <button className="Arrow" ><BsArrowUp /></button>
+                <button className="Arrow" ><BsArrow90DegRight/> </button>
+                <div >
+                    <button className="Arrow" ><BsArrowCounterclockwise /></button>
+                    <button className="Arrow" ><BsPause/></button>
+                    <button className="Arrow" ><BsArrowClockwise /></button>
                 </div>
             </div>
         );
