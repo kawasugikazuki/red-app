@@ -1,24 +1,23 @@
 import React from "react";
 import {BsArrowUp,BsArrowCounterclockwise,BsPause,BsArrowClockwise,BsArrow90DegRight,BsArrow90DegLeft} from "react-icons/bs";
-import radiconstyle from"./Radicon_Mode.css";
+import { radicon } from "../components/radicon";
+import Button from '@mui/material/Button';
 
-class Radicon extends React.Component{
-    render(){
+export const  Radicon=()=> {
         return(
             <div>
                 <h1>**Radicon Control Mode**</h1>
-                <h2>Server's IP address : </h2>
-                <button className="Arrow" ><BsArrow90DegLeft/></button>
-                <button className="Arrow" ><BsArrowUp /></button>
-                <button className="Arrow" ><BsArrow90DegRight/> </button>
+                
+                <Button variant="contained" sx={{fontSize: '6rem', padding: '16px 24px'}} onClick={()=>radicon("Left")}><BsArrow90DegLeft/></Button>
+                <Button variant="contained" sx={{fontSize: '6rem', padding: '16px 24px'}} onClick={()=>radicon("Forward")}><BsArrowUp /></Button>
+                <Button variant="contained" sx={{fontSize: '6rem', padding: '16px 24px'}} onClick={()=>radicon("Right")}><BsArrow90DegRight/> </Button>
                 <div >
-                    <button className="Arrow" ><BsArrowCounterclockwise /></button>
-                    <button className="Arrow" ><BsPause/></button>
-                    <button className="Arrow" ><BsArrowClockwise /></button>
+                    <Button variant="contained" sx={{fontSize: '6rem', padding: '16px 24px'}} onClick={()=>radicon("PivotLeft")}><BsArrowCounterclockwise /></Button>
+                    <Button variant="contained" sx={{fontSize: '6rem', padding: '16px 24px'}} onClick={()=>radicon("Stop")}><BsPause/></Button>
+                    <Button variant="contained" sx={{fontSize: '6rem', padding: '16px 24px'}} onClick={()=>radicon("PivotRight")}><BsArrowClockwise /></Button>
                 </div>
             </div>
         );
-    }
+    
 }
 
-export default Radicon;

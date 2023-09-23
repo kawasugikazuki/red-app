@@ -1,8 +1,7 @@
+export const  Shutdown=()=>{
+    const message = "Shutdown";
 
-export function  BrokerIP (IP){
-    const message = "BrokerIP_is_"+IP+"_Exploration_Tag";
-
-    fetch("/send_Broker",{
+    fetch("/Shutdown",{
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -17,4 +16,5 @@ export function  BrokerIP (IP){
         console.error("Error sending UDP message:",error);
     });
 
+    
 }

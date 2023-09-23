@@ -1,8 +1,7 @@
+export const  Restart=()=>{
+    const message = "Restart";
 
-export function  BrokerIP (IP){
-    const message = "BrokerIP_is_"+IP+"_Exploration_Tag";
-
-    fetch("/send_Broker",{
+    fetch("/Restart",{
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -16,5 +15,4 @@ export function  BrokerIP (IP){
     .catch(error => {
         console.error("Error sending UDP message:",error);
     });
-
 }

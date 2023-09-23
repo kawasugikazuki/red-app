@@ -1,7 +1,4 @@
-import React from "react";
-
-class StartExplore extends React.Component{
-sendMassages = () => {
+export const  StartExplore=()=>{
     const message = "StartExplore";
 
     fetch("/send_startexplore",{
@@ -18,14 +15,4 @@ sendMassages = () => {
     .catch(error => {
         console.error("Error sending UDP message:",error);
     });
-
-};
-    render(){
-        return(
-            <div>
-                <button onClick={this.sendMassages}>StartExplore</button>
-            </div>
-        );
-    }
 }
-export default StartExplore;

@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Time from "./pages/Title_and_Time";
-import Radicon from "./pages/Radicon_Mode";
-import Group from "./pages/Group_Management";
-import Entire from "./pages/Entire_Management";
-import Algorithm from "./pages/Algorithm_Mode";
+import {Radicon} from "./pages/Radicon_Mode";
+import {Group} from "./pages/Group_Management";
+import {Entire} from "./pages/Entire_Management";
+import {Algorithm} from "./pages/Algorithm_Mode";
 import Appstyle from "./Appstyle.css";
 
 

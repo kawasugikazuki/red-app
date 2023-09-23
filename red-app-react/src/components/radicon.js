@@ -1,8 +1,5 @@
-
-export function  BrokerIP (IP){
-    const message = "BrokerIP_is_"+IP+"_Exploration_Tag";
-
-    fetch("/send_Broker",{
+export function radicon(message) {
+    fetch("/send_startexplore",{
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -16,5 +13,4 @@ export function  BrokerIP (IP){
     .catch(error => {
         console.error("Error sending UDP message:",error);
     });
-
 }

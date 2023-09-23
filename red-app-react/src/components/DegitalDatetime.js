@@ -1,9 +1,10 @@
 import React, {useEffect,useState} from "react";
 
+
+
 const weekday = ["日","月","火","水","木","金","土"];
-
-
 const DigitalDateTime = () =>{
+    
     const [date, setDate] = useState([]);
     const [time, setTime] = useState([]);
 
