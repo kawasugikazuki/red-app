@@ -7,6 +7,7 @@ import FormGroup from '@mui/material/FormGroup';
 import TextField from '@mui/material/TextField';
 import { SendParam } from "../components/send_param";
 
+
 export const Algorithm = () =>{
     const [param,setParam]=useState({
         IsExploring: false,
@@ -19,13 +20,18 @@ export const Algorithm = () =>{
         BetweenMarkers: 0.8,
         Height_Correction: false,
         Reject: "A",
-        MarkerColor: "",
+        MarkerColor: "0",
         ShutterSpeed: 100,
         Xcoord: 0,
         Ycoord: 0,
         LeftPWM: 0,
         RightPWM: 0,
     });
+    const [frequency,setFrequency]=useState({
+        MarkerFrequency_A: 0,
+        MarkerFrequency_B: 0,
+    });
+
     const handleChange = (event) => {
         const id = event.target.id;
         const value =event.target.value;
@@ -35,10 +41,23 @@ export const Algorithm = () =>{
         }else{
             alert("Please enter a number");
         }
+    };
+
+    const handleChangefreqency = (event) => {
+        const id=event.target.id;
+        const value=event.target.value;
+    
+        if (!isNaN(value)) {
+            const num =parseFloat(value);
+            setFrequency({...frequency,[id]:num});
+        }else{
+            alert("Please enter a number");
+        }
     }
     const handleSwitch = (event) => {
         setParam({...param,[event.target.name]:event.target.checked});
     }
+    
 
         return(
             <div>
@@ -95,6 +114,22 @@ export const Algorithm = () =>{
                 <div>
                 <TextField
                 required
+                id="MarkerFrequency_A"
+                label="MarkerFrequency_A"
+                defaultValue={frequency.MarkerFrequency_A}
+                onChange={handleChangefreqency}
+                />
+                <TextField
+                required
+                id="MarkerFrequency_B"
+                label="MarkerFrequency_B"
+                defaultValue={frequency.MarkerFrequency_B}
+                onChange={handleChangefreqency}
+                />
+                </div>
+                <div>
+                <TextField
+                required
                 id="Between Makers"
                 label="Between Makers"
                 defaultValue={param.BetweenMarkers}
@@ -121,9 +156,10 @@ export const Algorithm = () =>{
                 </p>  
                 </FormGroup>
 
-                <Button variant="contained" onClick={()=>{SendParam(param)}} endIcon={<SendIcon />}>
+                <Button variant="contained" onClick={()=>{SendParam(param,frequency)}} endIcon={<SendIcon />}>
                     Send
                 </Button>
+                 {frequency.MarkerFrequency_A} {frequency.MarkerFrequency_B} 
             </div>
         );
 }
