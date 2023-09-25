@@ -2,21 +2,25 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const dgram = require('dgram');
 const app = express();
-const port = 3000;
+const port = 3001;
 const server = dgram.createSocket('udp4');
 const mqtt=require('mqtt');
 const client_mqtt=mqtt.connect('mqtt://localhost:1883',{clientId:'app'});
 const os = require('os');
 
 client_mqtt.on('connect',()=>{
-    client_mqtt.subscribe('RED/192.168.1.237/RobotStatus');
-    client_mqtt.subscribe('RED/192.168.1.237/DeviceData');
-    console.log('mqtt connected');
+    client_mqtt.subscribe('RED/+/RobotStatus');
+    client_mqtt.subscribe('RED/+/DeviceData');
+    client_mqtt.subscribe('RED/+/connect');
+    client_mqtt.subscribe('RED/+/disconnect');
+    client_mqtt.subscribe('RED/+/Param');
+    client_mqtt.subscribe('RED/+/Status');
+    console.log('connect ');
 
 });
-// client_mqtt.on('message', (topic, message)=> {
-//     console.log(message.toString());
-// });
+client_mqtt.on('message', (topic, message)=> {
+    console.log(message.toString());
+});
 
 app.use(bodyParser.json());
 
