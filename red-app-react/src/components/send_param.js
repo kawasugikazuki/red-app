@@ -1,4 +1,13 @@
-export function SendParam(param) {
+export function SendParam(param,frequency) {
+    console.log(frequency);
+    if(frequency.MarkerFrequency_A>0 && frequency.MarkerFrequency_B>0){
+        param.MarkerColor=frequency.MarkerFrequency_A+"_"+frequency.MarkerFrequency_B;
+    }else if ( frequency.MarkerFrequency_B===0){
+        param.MarkerColor=frequency.MarkerFrequency_A;
+    }else if ( frequency.MarkerFrequency_A===0){
+        param.MarkerColor=frequency.MarkerFrequency_B;
+    }
+    console.log(param.MarkerColor);
     fetch("/send_param",{
         method: "POST",
         headers: {
