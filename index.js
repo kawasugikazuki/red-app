@@ -8,19 +8,44 @@ const mqtt=require('mqtt');
 const client_mqtt=mqtt.connect('mqtt://localhost:1883',{clientId:'app'});
 const os = require('os');
 
+    // client_mqtt.subscribe('RED/+/RobotStatus');
+    // client_mqtt.subscribe('RED/+/DeviceData');
+    
+
+    // client_mqtt.subscribe('RED/+/Param');
+    // client_mqtt.subscribe('RED/+/Status');
 client_mqtt.on('connect',()=>{
-    client_mqtt.subscribe('RED/+/RobotStatus');
-    client_mqtt.subscribe('RED/+/DeviceData');
     client_mqtt.subscribe('RED/+/connect');
     client_mqtt.subscribe('RED/+/disconnect');
-    client_mqtt.subscribe('RED/+/Param');
-    client_mqtt.subscribe('RED/+/Status');
-    console.log('connect ');
+    console.log("connect");
+});
+// client_mqtt.on('message', (message)=> {
+//     console.log(message);
+//     const IPArray=[];
+//     const messagestring=message.toString();
+//     const messagearray=messagestring.split('/');
+//     const IP=messagearray[1];
+//     IPArray.push(IP);
+//     console.log(IPArray);
+// });
 
-});
-client_mqtt.on('message', (topic, message)=> {
-    console.log(message.toString());
-});
+
+// client_mqtt.on('message', (topic, message)=> {
+//     if (topic==='RED/+/connect'){
+//         console.log(message.toString());
+//         const IPArray=[];
+//         const messagestring=message.toString();
+//         const messagearray=messagestring.split(' ');
+//         const IP=messagearray[2];
+//         IPArray.push(IP);
+//         console.log(IPArray);
+//     }else if(topic==='RED/+/RobotStatus'){
+//         console.log(message.toString());
+//     }
+// });
+// client_mqtt.on('message', (topic, message)=> {
+//     console.log(message.toString());
+// });
 
 app.use(bodyParser.json());
 
@@ -123,7 +148,7 @@ app.get('/', (req, res) => {
 
 app.post('/send_param', (req, res) => {
     const param=req.body;
-    console.log(param);
+    // console.log(param);
     client_mqtt.publish('RED/Status',JSON.stringify(param));
 });
 
@@ -138,6 +163,32 @@ app.get('/get_IP', (req, res) => {
   res.json(ipv4.address);
 //   console.log(ipv4.address);
 })();
+});
+const IPArray=[];
+client_mqtt.on('message', (message)=> {
+    // console.log(message);
+    if (message.includes("connect")){
+    const messagestring=message.toString();
+    const messagearray=messagestring.split('/');
+    const IP=messagearray[1];
+        if (!IPArray.includes(IP)){
+        IPArray.push(IP);
+        // console.log(IPArray);
+        }
+    }
+    
+    if (message.includes("disconnect")){
+        // console.log(message);
+        const messagestring=message.toString();
+        const messagearray=messagestring.split('/');
+        const IP=messagearray[1];
+        IPArray.splice(IP,1);
+        // console.log(IPArray);
+
+    }
+});
+app.get('/get_redID', (req, res) => {
+    res.json({IPArray});
 });
 
 
