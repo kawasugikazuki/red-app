@@ -1,11 +1,9 @@
 import React,{useState,useEffect} from "react";
-import {StartExplore} from "../components/StartExplore";
-import {BrokerIP} from "../components/BrokerIP";
-import { Shutdown } from "../components/shutdown";
-import { Restart } from "../components/Restart";
 import { getIP } from "../components/Get_brokerIP";
 import { Button } from "@mui/material";
 import { get_redID } from "../components/Get_redID";
+import { get_robotostatus } from "../components/Get_RobotStatus";
+import { udp } from "../components/UDP";
 
 
 export const Group=()=>{
@@ -35,17 +33,31 @@ export const Group=()=>{
         fetchID();
     },[ID]);
 
+    const [Status,setStatus]=useState([]);
+    useEffect(()=>{
+        const fetchStatus=async()=>{
+            try{
+                const result=await get_robotostatus();
+                setStatus(result);
+            }catch(error){
+                console.log(error);
+            }
+        };
+        fetchStatus();
+    },[Status]);
+
 
         return(
             <div>
                 <h1>**Swarm System Operation and Management**</h1>
                 <h2>Server's IP address :{IP}</h2>
                 <ul>{ID.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
+                {/* <ul>{Status.map((item,index)=>(<li key={index}>{item}</li>))}</ul> */}
         
-                <Button variant="outlined" onClick={()=>{BrokerIP(IP)}}>BrokerIP</Button>
-                <Button variant="outlined" onClick={StartExplore}>Start Explore</Button>
-                <Button variant="outlined" onClick={Shutdown}>Shutdown</Button>
-                <Button variant="outlined" onClick={Restart}>Restart</Button>
+                <Button variant="outlined" onClick={()=>{udp("BrokerIP_is_"+IP+"_Exploration_Tag",50003)}}>BrokerIP</Button>
+                <Button variant="outlined" onClick={()=>{udp("StartExplore",50000)}}>Start Explore</Button>
+                <Button variant="outlined" onClick={()=>{udp("Shutdown",50002)}}>Shutdown</Button>
+                <Button variant="outlined" onClick={()=>{udp("Restart",50001)}}>Restart</Button>
             </div>
         );
     

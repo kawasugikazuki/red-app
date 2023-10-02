@@ -1,13 +1,12 @@
+export function  udp(message,port){
+    const UDPmessage = {message,port};
 
-export function  BrokerIP (IP){
-    const message = "BrokerIP_is_"+IP+"_Exploration_Tag";
-
-    fetch("/send_Broker",{
+    fetch("/UDP",{
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({message}),
+        body: JSON.stringify(UDPmessage),
     })
     .then(res => res.json())
     .then(data => {
@@ -16,5 +15,4 @@ export function  BrokerIP (IP){
     .catch(error => {
         console.error("Error sending UDP message:",error);
     });
-
 }

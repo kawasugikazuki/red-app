@@ -26,9 +26,9 @@ client_mqtt.on('connect',()=>{
 
 app.use(bodyParser.json());
 
-app.post('/send_Broker', (req, res) => {
+app.post('/UDP', (req, res) => {
     const message = req.body.message;
-    const serverport = 50003;
+    const serverport = req.body.port;
     const serverhost = "255.255.255.255";
 
     const client = dgram.createSocket('udp4');
@@ -47,74 +47,6 @@ app.post('/send_Broker', (req, res) => {
             res.json({message: "UDP message sent successfully"});
             
             }
-          client.close();
-    });
-});
-            
-app.post('/send_startexplore', (req, res) => {
-    const message = req.body.message;
-    const serverport = 50000;
-    const serverhost = "255.255.255.255";
-
-    const client = dgram.createSocket('udp4');
-
-    client.bind(()=>{
-        client.setBroadcast(true);
-    });
-
-    client.send(message, serverport, serverhost, (err) => {
-        if (err) {
-            console.error('Error sending broadcast message:', err);
-            res.status(500).json({error: "Error sending UDP message"});
-        } else {
-            console.log({message});
-            res.json({message: "UDP message sent successfully"});
-            }
-          client.close();
-    });
-});
-app.post('/Shutdown', (req, res) => {
-    const message = req.body.message;
-    const serverport = 50002;
-    const serverhost = "255.255.255.255";
-
-    const client = dgram.createSocket('udp4');
-
-    client.bind(()=>{
-        client.setBroadcast(true);
-    });
-
-    client.send(message, serverport, serverhost, (err) => {
-        if (err) {
-            console.error('Error sending broadcast message:', err);
-            res.status(500).json({error: "Error sending UDP message"});
-        } else {
-            console.log({message});
-            res.json({message: "UDP message sent successfully"});
-            }
-          client.close();
-    });
-});
- 
-app.post('/Restart', (req, res) => {
-    const message = req.body.message;
-    const serverport = 50001;
-    const serverhost = "255.255.255.255";
-
-    const client = dgram.createSocket('udp4');
-
-    client.bind(()=>{
-        client.setBroadcast(true);
-    });
-
-    client.send(message, serverport, serverhost, (err) => {
-        if (err) {
-            console.error('Error sending broadcast message:', err);
-            res.status(500).json({error: "Error sending UDP message"});
-        } else {
-            console.log({message});
-            res.json({message: "UDP message sent successfully"});
-        }
           client.close();
     });
 });
@@ -141,9 +73,10 @@ app.get('/get_IP', (req, res) => {
 //   console.log(ipv4.address);
 })();
 });
+
 const IPArray=[];
 client_mqtt.on('message', (topic,message)=> {
-    console.log(message.toString());
+    // console.log(message.toString());
     if (message.includes("connect")){
     const messagestring=message.toString();
     const messagearray=messagestring.split(' ');
@@ -158,13 +91,24 @@ client_mqtt.on('message', (topic,message)=> {
         const messagestring=message.toString();
         const messagearray=messagestring.split(' ');
         const IP=messagearray[2];
-        IPArray.splice(IP,1);
-        // console.log(IPArray);
-
+        const index=IPArray.indexOf(IP);
+        if (index !==-1){
+            IPArray.splice(index,1);
+        }
+        // console.log(IPArray); 
+    }else if (topic.includes("RobotStatus")){
+        // console.log(message.toString());
+        const messagestring=message.toString();
+        const RobotStatus=JSON.parse(messagestring);
+        console.log(RobotStatus);
     }
 });
 app.get('/get_redID', (req, res) => {
     res.json({IPArray});
+});
+
+app.get('/get_robotstatus', (req, res) => {
+    res.json({RobotStatus});
 });
 
 
