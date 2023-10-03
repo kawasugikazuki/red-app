@@ -1,5 +1,5 @@
-export const get_robotostatus=()=>{
-    return fetch("/get_robotostatus",{
+export const get_robotstatus=()=>{
+    return fetch("/get_robotstatus",{
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -7,11 +7,10 @@ export const get_robotostatus=()=>{
     })
     .then(res => res.json())
     .then(data => {
-        console.log(data);
+        // console.log(data);
     return data;
     })
     .catch(error => {
         console.error("Error getting redID :",error);
     });
-
 }

@@ -75,6 +75,7 @@ app.get('/get_IP', (req, res) => {
 });
 
 const IPArray=[];
+let RobotStatus={};
 client_mqtt.on('message', (topic,message)=> {
     // console.log(message.toString());
     if (message.includes("connect")){
@@ -97,18 +98,17 @@ client_mqtt.on('message', (topic,message)=> {
         }
         // console.log(IPArray); 
     }else if (topic.includes("RobotStatus")){
-        // console.log(message.toString());
         const messagestring=message.toString();
-        const RobotStatus=JSON.parse(messagestring);
-        console.log(RobotStatus);
+        RobotStatus=JSON.parse(messagestring);
+        // console.log(RobotStatus);
     }
 });
 app.get('/get_redID', (req, res) => {
-    res.json({IPArray});
+    res.json(IPArray);
 });
 
 app.get('/get_robotstatus', (req, res) => {
-    res.json({RobotStatus});
+    res.json(RobotStatus);
 });
 
 
