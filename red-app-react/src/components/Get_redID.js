@@ -7,7 +7,7 @@ export const get_redID=()=>{
     })
     .then(res => res.json())
     .then(data => {
-        // console.log(data.IPArray);
+        // console.log(data);
     return data;
     })
     .catch(error => {
