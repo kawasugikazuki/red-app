@@ -20,7 +20,7 @@ export const Algorithm = () =>{
         BetweenMarkers: 0.8,
         Height_Correction: false,
         Reject: "A",
-        MarkerColor: "0",
+        MarkerColor: "Green",
         ShutterSpeed: 100,
         Xcoord: 0,
         Ycoord: 0,
@@ -36,8 +36,16 @@ export const Algorithm = () =>{
         const id = event.target.id;
         const value =event.target.value;
         if (!isNaN(value)) {
-            const num =parseFloat(value);
-            setParam({...param,[id]:num});
+            if (id==="ShutterSpeed"){
+                const num =parseInt(value);
+                setParam({...param,[id]:num});
+            }else if (id==="MarkerColor"){
+                const num =String(value);
+                setParam({...param,[id]:num});
+            } else{
+                const num =parseFloat(value);
+                setParam({...param,[id]:num});
+            }
         }else{
             alert("Please enter a number");
         }
