@@ -11,7 +11,7 @@ import { SendParam } from "../components/send_param";
 export const Algorithm = () =>{
     const [param,setParam]=useState({
         IsExploring: false,
-        TransitTime: 2,
+        TransitTime: 2.0,
         Mu:1.0,
         Sigma: 1.0,
         Outer_Rth: 3.0,
@@ -20,12 +20,12 @@ export const Algorithm = () =>{
         BetweenMarkers: 0.8,
         Height_Correction: false,
         Reject: "A",
-        MarkerColor: "Green",
+        MarkerColor: "",
         ShutterSpeed: 100,
-        Xcoord: 0,
-        Ycoord: 0,
-        LeftPWM: 0,
-        RightPWM: 0,
+        Xcoord: 0.0,
+        Ycoord: 0.0,
+        LeftPWM: 0.0,
+        RightPWM: 0.0,
     });
     const [frequency,setFrequency]=useState({
         MarkerFrequency_A: 0,
