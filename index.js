@@ -12,13 +12,15 @@ const os = require('os');
     
 
     // client_mqtt.subscribe('RED/+/Param');
-    // client_mqtt.subscribe('RED/+/Status');
+    
 client_mqtt.on('connect',()=>{
-    client_mqtt.subscribe('RED/+/connect', {qos:0});
-    client_mqtt.subscribe('RED/+/disconnect', {qos:0});
-    client_mqtt.subscribe('RED/+/RobotStatus');
-    client_mqtt.subscribe('RED/+/DeviceData');
-    client_mqtt.subscribe('RED/+/whereImage');
+    client_mqtt.subscribe('RED/+/connect',{qos:1, retain:true});
+    client_mqtt.subscribe('RED/+/disconnect',{qos:1, retain:true});
+    client_mqtt.subscribe('RED/+/RobotStatus',{qos:1});
+    client_mqtt.subscribe('RED/+/DeviceData',{qos:1});
+    client_mqtt.subscribe('RED/+/Obstacle',{qos:1});
+    // client_mqtt.subscribe('+/Status');
+    // client_mqtt.subscribe('RED/+/CeilImage',{qos:0});
     console.log("connect");
 });
 
@@ -60,7 +62,7 @@ app.get('/', (req, res) => {
 app.post('/send_param', (req, res) => {
     const param=req.body;
     // console.log(param);
-    client_mqtt.publish('RED/Status',JSON.stringify(param),{qos:1});
+    client_mqtt.publish('RED/Status',JSON.stringify(param),{qos:1, retain:true});
 });
 
 
@@ -79,13 +81,14 @@ app.get('/get_IP', (req, res) => {
 const IPArray=[];
 let RobotStatus={};
 let DeviceData={};
+let ObstacleData={};
 client_mqtt.on('message', (topic,message)=> {
     // console.log(message.toString());
 
     //このif文はconnectとdisconnectの処理
     if (message.includes("connect")){
         const messagestring=message.toString();
-        console.log(messagestring);
+        console.log(message.toString());
         const messagearray=messagestring.split(' ');
         const IP=messagearray[2];
         if (messagearray[0]==="connect"){
@@ -101,18 +104,24 @@ client_mqtt.on('message', (topic,message)=> {
             }
             // console.log(IPArray); 
         } 
-    }else if (topic.includes("RobotStatus")){
+    }
+    if (topic.includes("RobotStatus")){
         const messagestring=message.toString();
-        // console.log(messagestring);
         RobotStatus=JSON.parse(messagestring);
-        // console.log(RobotStatus);
-    }else if (topic.includes("DeviceData")){
+        // console.log(messagestring);
+    }
+     if (topic.includes("DeviceData")){
         const messagestring=message.toString();
         DeviceData=JSON.parse(messagestring);
-        // console.log(DeviceData);
+        // console.log(messagestring);
     }
-    else if (topic.includes("whereImage")){
+    // if (topic.includes("Status")){
+    //     const messagestring=message.toString();
+    //     console.log(messagestring);
+    // }
+    if (topic.includes("Obstacle")){
         const messagestring=message.toString();
+        ObstacleData=JSON.parse(messagestring);
         // console.log(messagestring);
     }
     // console.log(IPArray);
@@ -126,6 +135,9 @@ app.get('/get_robotstatus', (req, res) => {
 });
 app.get('/get_devicedata', (req, res) => {
     res.json(DeviceData);
+});
+app.get('/get_obstacledata', (req, res) => {
+    res.json(ObstacleData);
 });
 
 

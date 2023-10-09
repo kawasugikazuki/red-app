@@ -5,6 +5,7 @@ import { get_redID } from "../components/Get_redID";
 import { get_robotstatus } from "../components/Get_RobotStatus";
 import { udp } from "../components/UDP";
 import { get_devicedata } from "../components/Get_DeviceData";
+import { get_obstacledata } from "../components/Get_ObstacleData";
 
 
 export const Group=()=>{
@@ -62,7 +63,25 @@ export const Group=()=>{
         };
         fetchDeviceData();
     },[DeviceData]);
+    //表示のため一時的に配列に変換
     const DeviceDataArray=Object.values(DeviceData);
+
+    const [ObstacleData,setObstacleData]=useState({});
+    useEffect(()=>{
+        const fetchObstacleData=async()=>{
+            try{
+                const result=await get_obstacledata();
+                setObstacleData(result);
+            }catch(error){
+                console.log(error);
+            }
+        };
+        fetchObstacleData();
+    },[ObstacleData]);
+
+    const ObstacleDataArray=Object.values(ObstacleData);
+
+
 
         return(
             <div>
@@ -71,7 +90,7 @@ export const Group=()=>{
                 <ul>{ID.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
                 <ul>{StatusArray.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
                 <ul>{DeviceDataArray.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
-
+                <ul>{ObstacleDataArray.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
                 
         
                 <Button variant="outlined" onClick={()=>{udp("BrokerIP_is_"+IP+"_Exploration_Tag",50003)}}>BrokerIP</Button>
