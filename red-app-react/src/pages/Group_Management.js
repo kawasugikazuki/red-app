@@ -2,10 +2,9 @@ import React,{useState,useEffect} from "react";
 import { getIP } from "../components/Get_brokerIP";
 import { Button } from "@mui/material";
 import { get_redID } from "../components/Get_redID";
-import { get_robotstatus } from "../components/Get_RobotStatus";
 import { udp } from "../components/UDP";
-import { get_devicedata } from "../components/Get_DeviceData";
-import { get_obstacledata } from "../components/Get_ObstacleData";
+import { get_reddata } from "../components/Get_reddata";
+
 
 
 export const Group=()=>{
@@ -36,62 +35,32 @@ export const Group=()=>{
         fetchID();
     },[ID]);
 
-    const [Status,setStatus]=useState({});
-
+    const [reddata,setReddata]=useState({});
     useEffect(()=>{
-        const fetchStatus=async()=>{
+        const fetchreddata=async()=>{
             try{
-                const result= await get_robotstatus();
-                setStatus(result);
+                const result=await get_reddata();
+                setReddata(result);
+                // console.log(result);
             }catch(error){
                 console.log(error);
             }
         };
-        fetchStatus();
-    },[Status]);
-    const StatusArray=Object.values(Status);
-
-    const [DeviceData,setDeviceData]=useState({});
-    useEffect(()=>{
-        const fetchDeviceData=async()=>{
-            try{
-                const result=await get_devicedata();
-                setDeviceData(result);
-            }catch(error){
-                console.log(error);
-            }
-        };
-        fetchDeviceData();
-    },[DeviceData]);
-    //表示のため一時的に配列に変換
-    const DeviceDataArray=Object.values(DeviceData);
-
-    const [ObstacleData,setObstacleData]=useState({});
-    useEffect(()=>{
-        const fetchObstacleData=async()=>{
-            try{
-                const result=await get_obstacledata();
-                setObstacleData(result);
-            }catch(error){
-                console.log(error);
-            }
-        };
-        fetchObstacleData();
-    },[ObstacleData]);
-
-    const ObstacleDataArray=Object.values(ObstacleData);
-
-
+        fetchreddata();
+    },[reddata]);
 
         return(
             <div>
                 <h1>**Swarm System Operation and Management**</h1>
                 <h2>Server's IP address :{IP}</h2>
                 <ul>{ID.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
-                <ul>{StatusArray.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
-                <ul>{DeviceDataArray.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
-                <ul>{ObstacleDataArray.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
-                
+                <ul>
+                    {Object.keys(reddata).map((key) => (
+                    <li key={key}>
+                        <strong>{key}:</strong> {JSON.stringify(reddata[key])}
+                        </li>
+                    ))}
+                </ul>
         
                 <Button variant="outlined" onClick={()=>{udp("BrokerIP_is_"+IP+"_Exploration_Tag",50003)}}>BrokerIP</Button>
                 <Button variant="outlined" onClick={()=>{udp("StartExplore",50000)}}>Start Explore</Button>

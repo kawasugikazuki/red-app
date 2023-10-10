@@ -3,10 +3,10 @@ const bodyParser = require('body-parser');
 const dgram = require('dgram');
 const app = express();
 const port = 3001;
-const server = dgram.createSocket('udp4');
 const mqtt=require('mqtt');
 const client_mqtt=mqtt.connect('mqtt://localhost:1883',{clientId:'app'});
 const os = require('os');
+const { red } = require('@mui/material/colors');
 
 
     
@@ -20,7 +20,7 @@ client_mqtt.on('connect',()=>{
     client_mqtt.subscribe('RED/+/DeviceData',{qos:1});
     client_mqtt.subscribe('RED/+/Obstacle',{qos:1});
     // client_mqtt.subscribe('+/Status');
-    // client_mqtt.subscribe('RED/+/CeilImage',{qos:0});
+    // client_mqtt.subscribe('RED/+/CeilImage',{qos:1});
     console.log("connect");
 });
 
@@ -82,6 +82,7 @@ const IPArray=[];
 let RobotStatus={};
 let DeviceData={};
 let ObstacleData={};
+let reddata={};
 client_mqtt.on('message', (topic,message)=> {
     // console.log(message.toString());
 
@@ -93,8 +94,9 @@ client_mqtt.on('message', (topic,message)=> {
         const IP=messagearray[2];
         if (messagearray[0]==="connect"){
             if (!IPArray.includes(IP)){
-            IPArray.push(IP);
-            // console.log(IPArray);
+                IPArray.push(IP);
+                // console.log(IPArray);
+                reddata[IP]={};
             }
         }else if (messagearray[0]==="disconnect"){
             const index=IPArray.indexOf(IP);
@@ -108,36 +110,36 @@ client_mqtt.on('message', (topic,message)=> {
     if (topic.includes("RobotStatus")){
         const messagestring=message.toString();
         RobotStatus=JSON.parse(messagestring);
+        if (reddata[RobotStatus.ID]){
+            reddata[RobotStatus.ID].RobotStatus=RobotStatus;
+        }
+
         // console.log(messagestring);
     }
      if (topic.includes("DeviceData")){
         const messagestring=message.toString();
         DeviceData=JSON.parse(messagestring);
+        if (reddata[DeviceData.ID]){
+            reddata[DeviceData.ID].DeviceData=DeviceData;
+        }
         // console.log(messagestring);
     }
-    // if (topic.includes("Status")){
-    //     const messagestring=message.toString();
-    //     console.log(messagestring);
-    // }
     if (topic.includes("Obstacle")){
         const messagestring=message.toString();
         ObstacleData=JSON.parse(messagestring);
+        if (reddata[ObstacleData.ID]){
+            reddata[ObstacleData.ID].ObstacleData=ObstacleData;
+        }
         // console.log(messagestring);
     }
-    // console.log(IPArray);
+    console.log(reddata);
 });
 app.get('/get_redID', (req, res) => {
     res.json(IPArray);
 });
 
-app.get('/get_robotstatus', (req, res) => {
-    res.json(RobotStatus);
-});
-app.get('/get_devicedata', (req, res) => {
-    res.json(DeviceData);
-});
-app.get('/get_obstacledata', (req, res) => {
-    res.json(ObstacleData);
+app.get('/get_reddata', (req, res) => {
+    res.json(reddata);
 });
 
 
