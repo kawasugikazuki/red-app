@@ -1,5 +1,6 @@
-export function  udp(message,port){
-    const UDPmessage = {message,port};
+export function  udp(message,port,host){
+    // const host="255.255.255.255";
+    const UDPmessage = {message,port,host};
 
     fetch("/UDP",{
         method: "POST",
