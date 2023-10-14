@@ -6,7 +6,6 @@ const port = 3001;
 const mqtt=require('mqtt');
 const client_mqtt=mqtt.connect('mqtt://localhost:1883',{clientId:'app'});
 const os = require('os');
-const { red } = require('@mui/material/colors');
 
 
     
@@ -20,7 +19,8 @@ client_mqtt.on('connect',()=>{
     client_mqtt.subscribe('RED/+/DeviceData',{qos:1});
     client_mqtt.subscribe('RED/+/Obstacle',{qos:1});
     // client_mqtt.subscribe('+/Status');
-    // client_mqtt.subscribe('RED/+/CeilImage',{qos:1});
+    client_mqtt.subscribe('RED/+/CeilImage',{qos:1});
+    client_mqtt.subscribe('RED/+/FloorImage',{qos:1});
     console.log("connect");
 });
 
@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 app.post('/UDP', (req, res) => {
     const message = req.body.message;
     const serverport = req.body.port;
-    const serverhost = "255.255.255.255";
+    const serverhost = req.body.host;
 
     const client = dgram.createSocket('udp4');
 
@@ -83,6 +83,8 @@ let RobotStatus={};
 let DeviceData={};
 let ObstacleData={};
 let reddata={};
+let CeilImage={};
+let FloorImage={};
 client_mqtt.on('message', (topic,message)=> {
     // console.log(message.toString());
 
@@ -119,6 +121,7 @@ client_mqtt.on('message', (topic,message)=> {
      if (topic.includes("DeviceData")){
         const messagestring=message.toString();
         DeviceData=JSON.parse(messagestring);
+        // console.log(DeviceData);
         if (reddata[DeviceData.ID]){
             reddata[DeviceData.ID].DeviceData=DeviceData;
         }
@@ -132,7 +135,13 @@ client_mqtt.on('message', (topic,message)=> {
         }
         // console.log(messagestring);
     }
-    console.log(reddata);
+    // if (topic.includes("CeilImage")){
+    //     CeilImage=JSON.parse(message);
+    // }
+    // if (topic.includes("FloorImage")){
+    //     FloorImage=JSON.parse(message);
+    // }
+    // console.log(reddata);
 });
 app.get('/get_redID', (req, res) => {
     res.json(IPArray);
@@ -141,6 +150,13 @@ app.get('/get_redID', (req, res) => {
 app.get('/get_reddata', (req, res) => {
     res.json(reddata);
 });
+
+// app.get('/get_Ceilimage', (req, res) => {
+//     res.json(CeilImage);
+// });
+// app.get('/get_Floorimage', (req, res) => {
+//     res.json(FloorImage);
+// });
 
 
 app.listen(port, () => {
