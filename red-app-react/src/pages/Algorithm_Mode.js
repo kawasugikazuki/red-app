@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -6,9 +6,36 @@ import Switch from '@mui/material/Switch';
 import FormGroup from '@mui/material/FormGroup';
 import TextField from '@mui/material/TextField';
 import { SendParam } from "../components/send_param";
+import { get_redID } from "../components/Get_redID";
+import Checkbox from '@mui/material/Checkbox';
+import Autocomplete from '@mui/material/Autocomplete';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 export const Algorithm = () =>{
+    const [ID,setID]=useState([]);
+    useEffect(()=>{
+        const fetchID=async()=>{
+            try{
+                const result=await get_redID();
+                if (!arraycheck(result,ID)){
+                    console.log("ID changed");
+                    setID(result);
+                };
+                console.log(result);
+            }catch(error){
+                console.log(error);
+            }
+        };
+        fetchID();
+        const arraycheck=(array1,array2)=>{
+            return JSON.stringify(array1)===JSON.stringify(array2);
+        };
+    },[ID]);
+
     const [param,setParam]=useState({
         IsExploring: false,
         TransitTime: 2.0,
@@ -65,11 +92,45 @@ export const Algorithm = () =>{
     const handleSwitch = (event) => {
         setParam({...param,[event.target.name]:event.target.checked});
     }
+
+    const [selectedID, setSelectedID] = useState([]);
+
+    const handleChangeID = (event, value) => {
+        setSelectedID(value);
+    }
+
     
 
         return(
             <div>
                 <h1>**Algorithm Control Mode**</h1>
+                <Autocomplete
+                    multiple
+                    id="checkboxes-tags-demo"
+                    options={ID}
+                    disableCloseOnSelect
+                    getOptionLabel={(option) => option}
+                    onChange={handleChangeID}
+                    renderOption={(props, option, { selected }) => (
+                        <li {...props}>
+                            <Checkbox
+                            icon={icon}
+                            checkedIcon={checkedIcon}
+                            style={{ marginRight: 8 }}
+                            checked={selected}
+                            />
+                            {option}
+                        </li>
+                    )}
+                    style={{ width: 500 }}
+                    renderInput={(params) => (
+                        <TextField {...params} label="ID" />
+                    )}
+                />
+
+
+
+
                 <FormGroup>
                     <p>Algorithm
                         <FormControlLabel control={<Switch name="IsExploring" checked={param.IsExploring} onChange={handleSwitch}/>} label={param.IsExploring ? 'on':'off'} />
@@ -79,21 +140,21 @@ export const Algorithm = () =>{
                 required
                 id="TransitTime"
                 label="TransitTime"
-                defaultValue={param.TransitTime}
+                value={param.TransitTime}
                 onChange={handleChange}
                 />
                 <TextField
                 required
                 id="Inner_Rth"
                 label="Inner_Rth"
-                defaultValue={param.Inner_Rth}
+                value={param.Inner_Rth}
                 onChange={handleChange}
                 />
                 <TextField
                 required
                 id="Mu"
                 label="Mu"
-                defaultValue={param.Mu}
+                value={param.Mu}
                 onChange={handleChange}
                 />
                 <div>
@@ -101,21 +162,21 @@ export const Algorithm = () =>{
                 required
                 id="Sigma"
                 label="Sigma"
-                defaultValue={param.Sigma}
+                value={param.Sigma}
                 onChange={handleChange}
                 />
                 <TextField
                 required
                 id="Outer_Rth"
                 label="Outer_Rth"
-                defaultValue={param.Outer_Rth}
+                value={param.Outer_Rth}
                 onChange={handleChange}
                 />
                 <TextField
                 required
                 id="Height"
                 label="Height"
-                defaultValue={param.Height}
+                value={param.Height}
                 onChange={handleChange}
                 />
                 </div>
@@ -124,14 +185,14 @@ export const Algorithm = () =>{
                 required
                 id="MarkerFrequency_A"
                 label="MarkerFrequency_A"
-                defaultValue={frequency.MarkerFrequency_A}
+                value={frequency.MarkerFrequency_A}
                 onChange={handleChangefreqency}
                 />
                 <TextField
                 required
                 id="MarkerFrequency_B"
                 label="MarkerFrequency_B"
-                defaultValue={frequency.MarkerFrequency_B}
+                value={frequency.MarkerFrequency_B}
                 onChange={handleChangefreqency}
                 />
                 </div>
@@ -140,21 +201,21 @@ export const Algorithm = () =>{
                 required
                 id="Between Makers"
                 label="Between Makers"
-                defaultValue={param.BetweenMarkers}
+                value={param.BetweenMarkers}
                 onChange={handleChange}
                 />
                 <TextField
                 required
                 id="Xcoord"
                 label="Xcoord"
-                defaultValue={param.Xcoord}
+                value={param.Xcoord}
                 onChange={handleChange}
                 />
                 <TextField
                 required
                 id="Ycoord"
                 label="Ycoord"
-                defaultValue={param.Ycoord}
+                value={param.Ycoord}
                 onChange={handleChange}
                 />
                 </div>
@@ -164,7 +225,7 @@ export const Algorithm = () =>{
                 </p>  
                 </FormGroup>
 
-                <Button variant="contained" onClick={()=>{SendParam(param,frequency)}} endIcon={<SendIcon />}>
+                <Button variant="contained" onClick={()=>{SendParam(param,frequency,selectedID)}} endIcon={<SendIcon />}>
                     Send
                 </Button>
                  {frequency.MarkerFrequency_A} {frequency.MarkerFrequency_B} 
