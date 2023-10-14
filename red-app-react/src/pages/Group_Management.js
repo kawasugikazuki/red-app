@@ -26,13 +26,19 @@ export const Group=()=>{
         const fetchID=async()=>{
             try{
                 const result=await get_redID();
-                setID(result);
-                // console.log(result);
+                if (!arraycheck(result,ID)){
+                    console.log("ID changed");
+                    setID(result);
+                };
+                console.log(result);
             }catch(error){
                 console.log(error);
             }
         };
         fetchID();
+        const arraycheck=(array1,array2)=>{
+            return JSON.stringify(array1)===JSON.stringify(array2);
+        };
     },[ID]);
 
     const [reddata,setReddata]=useState({});
@@ -62,10 +68,10 @@ export const Group=()=>{
                     ))}
                 </ul>
         
-                <Button variant="outlined" onClick={()=>{udp("BrokerIP_is_"+IP+"_Exploration_Tag",50003)}}>BrokerIP</Button>
-                <Button variant="outlined" onClick={()=>{udp("StartExplore",50000)}}>Start Explore</Button>
-                <Button variant="outlined" onClick={()=>{udp("Shutdown",50002)}}>Shutdown</Button>
-                <Button variant="outlined" onClick={()=>{udp("Restart",50001)}}>Restart</Button>
+                <Button variant="outlined" onClick={()=>{udp("BrokerIP_is_"+IP+"_Exploration_Tag",50003,"255.255.255.255")}}>BrokerIP</Button>
+                <Button variant="outlined" onClick={()=>{udp("StartExplore",50000,"255.255.255.255")}}>Start Explore</Button>
+                <Button variant="outlined" onClick={()=>{udp("Shutdown",50002,"255.255.255.255")}}>Shutdown</Button>
+                <Button variant="outlined" onClick={()=>{udp("Restart",50001,"255.255.255.255")}}>Restart</Button>
             </div>
         );
     
