@@ -13,8 +13,8 @@ const os = require('os');
     // client_mqtt.subscribe('RED/+/Param');
     
 client_mqtt.on('connect',()=>{
-    client_mqtt.subscribe('RED/+/connect',{qos:1, retain:true});
-    client_mqtt.subscribe('RED/+/disconnect',{qos:1, retain:true});
+    client_mqtt.subscribe('RED/+/connect',{qos:1});
+    client_mqtt.subscribe('RED/+/disconnect',{qos:1});
     client_mqtt.subscribe('RED/+/RobotStatus',{qos:1});
     client_mqtt.subscribe('RED/+/DeviceData',{qos:1});
     client_mqtt.subscribe('RED/+/Obstacle',{qos:1});
@@ -60,9 +60,18 @@ app.get('/', (req, res) => {
 });
 
 app.post('/send_param', (req, res) => {
-    const param=req.body;
+    const param=req.body.param;
+    const selectedID=req.body.selectedID;
     // console.log(param);
-    client_mqtt.publish('RED/Status',JSON.stringify(param),{qos:1, retain:true});
+    // console.log(selectedID);
+    if (selectedID.length===0){
+    client_mqtt.publish('RED/Status',JSON.stringify(param),{qos:1});
+    }else{
+        selectedID.map((ID)=>{
+            client_mqtt.publish('RED/'+ID+'/Param',JSON.stringify(param),{qos:1});
+            console.log(ID);
+        });
+    }
 });
 
 
@@ -135,12 +144,12 @@ client_mqtt.on('message', (topic,message)=> {
         }
         // console.log(messagestring);
     }
-    // if (topic.includes("CeilImage")){
-    //     CeilImage=JSON.parse(message);
-    // }
-    // if (topic.includes("FloorImage")){
-    //     FloorImage=JSON.parse(message);
-    // }
+    if (topic.includes("CeilImage")){
+        CeilImage=JSON.parse(message);
+    }
+    if (topic.includes("FloorImage")){
+        FloorImage=JSON.parse(message);
+    }
     // console.log(reddata);
 });
 app.get('/get_redID', (req, res) => {
@@ -151,12 +160,12 @@ app.get('/get_reddata', (req, res) => {
     res.json(reddata);
 });
 
-// app.get('/get_Ceilimage', (req, res) => {
-//     res.json(CeilImage);
-// });
-// app.get('/get_Floorimage', (req, res) => {
-//     res.json(FloorImage);
-// });
+app.get('/get_Ceilimage', (req, res) => {
+    res.json(CeilImage);
+});
+app.get('/get_Floorimage', (req, res) => {
+    res.json(FloorImage);
+});
 
 
 app.listen(port, () => {
