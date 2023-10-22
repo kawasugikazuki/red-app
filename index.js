@@ -20,7 +20,7 @@ client_mqtt.on('connect',()=>{
     client_mqtt.subscribe('RED/+/Obstacle',{qos:1});
     // client_mqtt.subscribe('+/Status');
     client_mqtt.subscribe('RED/+/CeilImage',{qos:1});
-    client_mqtt.subscribe('RED/+/FloorImage',{qos:1});
+    // client_mqtt.subscribe('RED/+/FloorImage',{qos:1});
     console.log("connect");
 });
 
@@ -87,7 +87,7 @@ app.get('/get_IP', (req, res) => {
 })();
 });
 
-const IPArray=[];
+const IPnowArray=[];
 let RobotStatus={};
 let DeviceData={};
 let ObstacleData={};
@@ -104,16 +104,16 @@ client_mqtt.on('message', (topic,message)=> {
         const messagearray=messagestring.split(' ');
         const IP=messagearray[2];
         if (messagearray[0]==="connect"){
-            if (!IPArray.includes(IP)){
-                IPArray.push(IP);
+            if (!IPnowArray.includes(IP)){
+                IPnowArray.push(IP);
                 // console.log(IPArray);
                 reddata[IP]={};
             }
         }else if (messagearray[0]==="disconnect"){
-            const index=IPArray.indexOf(IP);
+            const index=IPnowArray.indexOf(IP);
             // console.log(index);
             if (index !==-1){
-                IPArray.splice(index,1);
+                IPnowArray.splice(index,1);
             }
             // console.log(IPArray); 
         } 
@@ -153,7 +153,7 @@ client_mqtt.on('message', (topic,message)=> {
     // console.log(reddata);
 });
 app.get('/get_redID', (req, res) => {
-    res.json(IPArray);
+    res.json(IPnowArray);
 });
 
 app.get('/get_reddata', (req, res) => {
@@ -163,9 +163,9 @@ app.get('/get_reddata', (req, res) => {
 app.get('/get_Ceilimage', (req, res) => {
     res.json(CeilImage);
 });
-app.get('/get_Floorimage', (req, res) => {
-    res.json(FloorImage);
-});
+// app.get('/get_Floorimage', (req, res) => {
+//     res.json(FloorImage);
+// });
 
 
 app.listen(port, () => {

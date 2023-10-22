@@ -4,6 +4,8 @@ import { Button } from "@mui/material";
 import { get_redID } from "../components/Get_redID";
 import { udp } from "../components/UDP";
 import { get_reddata } from "../components/Get_reddata";
+import { SendParam } from "../components/send_param";
+import { CollapsibleTable } from "../components/show_reddata";
 
 
 
@@ -26,19 +28,13 @@ export const Group=()=>{
         const fetchID=async()=>{
             try{
                 const result=await get_redID();
-                if (!arraycheck(result,ID)){
-                    console.log("ID changed");
-                    setID(result);
-                };
-                console.log(result);
+              
+                setID(result);
             }catch(error){
                 console.log(error);
             }
         };
         fetchID();
-        const arraycheck=(array1,array2)=>{
-            return JSON.stringify(array1)===JSON.stringify(array2);
-        };
     },[ID]);
 
     const [reddata,setReddata]=useState({});
@@ -55,24 +51,23 @@ export const Group=()=>{
         fetchreddata();
     },[reddata]);
 
+
         return(
             <div>
                 <h1>**Swarm System Operation and Management**</h1>
                 <h2>Server's IP address :{IP}</h2>
                 <ul>{ID.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
-                <ul>
-                    {Object.keys(reddata).map((key) => (
-                    <li key={key}>
-                        <strong>{key}:</strong> {JSON.stringify(reddata[key])}
-                        </li>
-                    ))}
-                </ul>
+
+                <CollapsibleTable reddata={reddata}/>
+                
         
                 <Button variant="outlined" onClick={()=>{udp("BrokerIP_is_"+IP+"_Exploration_Tag",50003,"255.255.255.255")}}>BrokerIP</Button>
                 <Button variant="outlined" onClick={()=>{udp("StartExplore",50000,"255.255.255.255")}}>Start Explore</Button>
                 <Button variant="outlined" onClick={()=>{udp("Shutdown",50002,"255.255.255.255")}}>Shutdown</Button>
                 <Button variant="outlined" onClick={()=>{udp("Restart",50001,"255.255.255.255")}}>Restart</Button>
+                {/* <Button variant="outlined" onClick={()=>{SendParam(pram,frequency)}}>All Stop</Button> */}
             </div>
         );
     
 }
+
