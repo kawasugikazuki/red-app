@@ -53,7 +53,7 @@ export const  Radicon=()=> {
 
         return(
             <div>
-                <h1>**udp Control Mode**</h1>
+                <h1>**Radicon Control Mode**</h1>
             <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">ID</InputLabel>
