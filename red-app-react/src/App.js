@@ -29,12 +29,12 @@ function App() {
             </Link>
          </li>
          <li>
-            <Link to="Entire">
+            <Link to="/Entire">
               <button>Entire Manegement</button>
             </Link>
          </li>
          <li>
-            <Link to="Algorithm">
+            <Link to="/Algorithm">
               <button>Algorithm Mode</button>
             </Link>
          </li>

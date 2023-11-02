@@ -4,8 +4,17 @@ const dgram = require('dgram');
 const app = express();
 const port = 3001;
 const mqtt=require('mqtt');
+// const aedes=require('aedes')();
+// const server = require('net').createServer(aedes.handle);
+const port_aedes = 1883;
+
+// server.listen(port_aedes, function () {
+//     console.log('server started and listening on port ', port_aedes);
+// })
 // const client_mqtt=mqtt.connect('mqtt://broker.emqx.io:1883',{clientId:'app'});
 const client_mqtt=mqtt.connect('mqtt://localhost:1883',{clientId:'app'});
+// const client_mqtt=mqtt.connect('mqtt://192.168.1.113:1883',{clientId:'app'});
+
 
 const os = require('os');
 
@@ -26,18 +35,6 @@ client_mqtt.on('connect',()=>{
     // client_mqtt.subscribe('RED/+/FloorImage',{qos:1});
     console.log("connect");
 });
-
-// client_mqtt.on('clientConnected', function(client){
-//     console.log('broker.on.connected.', 'client:', client.id);
-// });
-
-// client_mqtt.on('clientDisconnected', function(client){
-//     console.log('broker.on.disconnected.', 'client:', client.id);
-// });
-
-// client_mqtt.on('message', (topic, message)=> {
-//     console.log(message.toString());
-// });
 
 app.use(bodyParser.json());
 
@@ -168,7 +165,7 @@ client_mqtt.on('message', (topic,message)=> {
         const parts=topic.split("/");
         const IP=parts[1];
         reddata[IP].param=param;
-        console.log(messagestring);
+        // console.log(messagestring);
     }
     if(topic.includes("RED/Status")){
         const messagestring=message.toString();

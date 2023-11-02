@@ -11,11 +11,18 @@ import Checkbox from '@mui/material/Checkbox';
 import Autocomplete from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import NativeSelect from '@mui/material/NativeSelect';
+
+
+
+
+export const Algorithm = () =>{
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
-
-export const Algorithm = () =>{
     const [ID,setID]=useState([]);
     useEffect(()=>{
         const fetchID=async()=>{
@@ -62,21 +69,16 @@ export const Algorithm = () =>{
     const handleChange = (event) => {
         const id = event.target.id;
         const value =event.target.value;
-        if (!isNaN(value)) {
-            if (id==="ShutterSpeed"){
-                const num =parseInt(value);
-                setParam({...param,[id]:num});
-            }else if (id==="MarkerColor"){
-                const num =String(value);
-                setParam({...param,[id]:num});
-            } else{
-                const num =parseFloat(value);
-                setParam({...param,[id]:num});
+        if (value !== "" && value !== null) {
+            if(id==="ShutterSpeed"){
+                const num = parseInt(value);
+                setParam({ ...param, [id]: num });
+            }else{
+                const num = parseFloat(value);
+                setParam({ ...param, [id]: num });
             }
-        }else{
-            alert("Please enter a number");
         }
-    };
+        };
 
     const handleChangefreqency = (event) => {
         const id=event.target.id;
@@ -195,13 +197,47 @@ export const Algorithm = () =>{
                 value={frequency.MarkerFrequency_B}
                 onChange={handleChangefreqency}
                 />
-                </div>
-                <div>
                 <TextField
                 required
-                id="Between Makers"
-                label="Between Makers"
+                id="BetweenMarkers"
+                label="BetweenMarkers"
                 value={param.BetweenMarkers}
+                onChange={handleChange}
+                />
+                </div>
+                <div>
+                
+                <Box sx={{ minWidth: 20 }}>
+                <FormControl style={{ width: '150px' }}>
+                 <InputLabel htmlFor="uncontrolled-native">
+                    Reject
+                </InputLabel>
+                <NativeSelect
+                 value={param.Reject}
+                  inputProps={{
+                   name: 'Reject',
+                   id: 'Reject',
+                  }}
+                onChange={(event) => {
+                    const value = event.target.value;
+                    setParam({ ...param, Reject: value });
+                  }}
+                >
+                <option value={"A"}>A</option>
+                <option value={"B"}>B</option>
+                <option value={"C"}>C</option>
+                <option value={"D"}>D</option>
+                </NativeSelect>
+                </FormControl>
+                </Box>
+
+
+
+                <TextField
+                required
+                id="ShutterSpeed"
+                label="ShutterSpeed"
+                value={param.ShutterSpeed}
                 onChange={handleChange}
                 />
                 <TextField
@@ -228,7 +264,8 @@ export const Algorithm = () =>{
                 <Button variant="contained" onClick={()=>{SendParam(param,frequency,selectedID)}} endIcon={<SendIcon />}>
                     Send
                 </Button>
-                 {frequency.MarkerFrequency_A} {frequency.MarkerFrequency_B} 
+                 {/* {frequency.MarkerFrequency_A} {frequency.MarkerFrequency_B}  */}
+                 {JSON.stringify(param)}
             </div>
         );
 }

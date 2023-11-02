@@ -6,8 +6,6 @@ import { udp } from "../components/UDP";
 import { get_reddata } from "../components/Get_reddata";
 import { CollapsibleTable } from "../components/show_reddata";
 
-
-
 export const Group=()=>{
   const [IP,setIP]=useState("");
     useEffect(()=>{
