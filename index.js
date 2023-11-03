@@ -12,8 +12,8 @@ const port_aedes = 1883;
 //     console.log('server started and listening on port ', port_aedes);
 // })
 // const client_mqtt=mqtt.connect('mqtt://broker.emqx.io:1883',{clientId:'app'});
-const client_mqtt=mqtt.connect('mqtt://localhost:1883',{clientId:'app'});
-// const client_mqtt=mqtt.connect('mqtt://192.168.1.113:1883',{clientId:'app'});
+// const client_mqtt=mqtt.connect('mqtt://localhost:1883',{clientId:'app'});
+const client_mqtt=mqtt.connect('mqtt://192.168.1.115:1883',{clientId:'app'});
 
 
 const os = require('os');

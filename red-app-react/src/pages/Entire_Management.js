@@ -5,7 +5,6 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import uniqWith from 'lodash/uniqWith';
 import isEqual from 'lodash/isEqual';
-import { Algorithm } from "./Algorithm_Mode";
 
 
 export const Entire = () => {
