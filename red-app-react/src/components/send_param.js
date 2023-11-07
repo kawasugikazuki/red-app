@@ -8,6 +8,9 @@ export function SendParam(param,frequency,selectedID) {
         param.MarkerColor=String(frequency.MarkerFrequency_B);
     }
     // console.log(param.MarkerColor);
+
+
+
     const sendparam={param,selectedID};
     fetch("/send_param",{
         method: "POST",

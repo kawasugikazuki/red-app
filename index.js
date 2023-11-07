@@ -4,6 +4,7 @@ const dgram = require('dgram');
 const app = express();
 const port = 3001;
 const mqtt=require('mqtt');
+//自分のPCでbrokerを立てる場合
 // const aedes=require('aedes')();
 // const server = require('net').createServer(aedes.handle);
 const port_aedes = 1883;
@@ -12,8 +13,9 @@ const port_aedes = 1883;
 //     console.log('server started and listening on port ', port_aedes);
 // })
 // const client_mqtt=mqtt.connect('mqtt://broker.emqx.io:1883',{clientId:'app'});
-// const client_mqtt=mqtt.connect('mqtt://localhost:1883',{clientId:'app'});
-const client_mqtt=mqtt.connect('mqtt://192.168.1.115:1883',{clientId:'app'});
+// const client_mqtt=mqtt.connect('mqtt://localhost:1883',{clientId:'app'})
+//安藤さんのPCのIPアドレスにする
+const client_mqtt=mqtt.connect('mqtt://192.168.1.34:1883',{clientId:'app'});
 
 
 const os = require('os');
@@ -73,7 +75,9 @@ app.post('/send_param', (req, res) => {
     // console.log(param);
     // console.log(selectedID);
     if (selectedID.length===0){
-    client_mqtt.publish('RED/Status',JSON.stringify(param),{qos:1});
+            client_mqtt.publish('RED/Stutas',JSON.stringify(param),{qos:1});
+            // console.log(ID);
+    // client_mqtt.publish('RED/Status',JSON.stringify(param),{qos:1});
     }else{
         selectedID.map((ID)=>{
             client_mqtt.publish('RED/'+ID+'/Param',JSON.stringify(param),{qos:1});
