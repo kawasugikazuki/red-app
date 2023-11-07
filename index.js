@@ -15,7 +15,7 @@ const port_aedes = 1883;
 // const client_mqtt=mqtt.connect('mqtt://broker.emqx.io:1883',{clientId:'app'});
 // const client_mqtt=mqtt.connect('mqtt://localhost:1883',{clientId:'app'})
 //安藤さんのPCのIPアドレスにする
-const client_mqtt=mqtt.connect('mqtt://192.168.1.34:1883',{clientId:'app'});
+const client_mqtt=mqtt.connect('mqtt://192.168.1.113:1883',{clientId:'app'});
 
 
 const os = require('os');
@@ -81,7 +81,8 @@ app.post('/send_param', (req, res) => {
     }else{
         selectedID.map((ID)=>{
             client_mqtt.publish('RED/'+ID+'/Param',JSON.stringify(param),{qos:1});
-            // console.log(ID);
+            console.log(ID);
+            console.log(param);
         });
     }
 });
@@ -168,7 +169,7 @@ client_mqtt.on('message', (topic,message)=> {
         param=JSON.parse(messagestring);
         const parts=topic.split("/");
         const IP=parts[1];
-        reddata[IP].param=param;
+        // reddata[IP].param=param;
         // console.log(messagestring);
     }
     if(topic.includes("RED/Status")){

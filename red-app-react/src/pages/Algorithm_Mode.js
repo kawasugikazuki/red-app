@@ -224,253 +224,294 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
     //     "192.168.1.237",
 
     // ];
-    const bigmoveselectedIDA=[
-        "192.168.1.218",
-        "192.168.1.216",
-        "192.168.1.206",
-        "192.168.1.195",
-        "192.168.1.237",
-        "192.168.1.205",
-        "192.168.1.219",
-        "192.168.1.238",
-        "192.168.1.246",
+    // const bigmoveselectedIDA=[
+    //     "192.168.1.218",
+    //     "192.168.1.216",
+    //     "192.168.1.206",
+    //     "192.168.1.195",
+    //     "192.168.1.237",
+    //     "192.168.1.205",
+    //     "192.168.1.219",
+    //     "192.168.1.238",
+    //     "192.168.1.246",
 
-    ];
-    const bigmoveselectedIDB=[
-        "192.168.1.224",
-        "192.168.1.197",
-        "192.168.1.200",
-        "192.168.1.210",
-        "192.168.1.207",
-        "192.168.1.202",
-        "192.168.1.192",
-        "192.168.1.244",
-    ];
-    const bigmoveselectedIDC=[
-        "192.168.1.201",
-        "192.168.1.208",
-        "192.168.1.245",
-        "192.168.1.203",
+    // ];
+    // const bigmoveselectedIDB=[
+    //     "192.168.1.224",
+    //     "192.168.1.197",
+    //     "192.168.1.200",
+    //     "192.168.1.210",
+    //     "192.168.1.207",
+    //     "192.168.1.202",
+    //     "192.168.1.192",
+    //     "192.168.1.244",
+    // ];
+    // const bigmoveselectedIDC=[
+    //     "192.168.1.201",
+    //     "192.168.1.208",
+    //     "192.168.1.245",
+    //     "192.168.1.203",
+    //     "192.168.1.204",
+    //     "192.168.1.214",
+    //     "192.168.1.221",
+    //     "192.168.1.213",
+    //     "192.168.1.198",
+    // ];
+
+
+    // const bigmoveparam1 ={
+    //     IsExploring: true,
+    //     TransitTime: 0.2,
+    //     Mu:0.3,
+    //     Sigma: 0.1,
+    //     Outer_Rth: 1,
+    //     Inner_Rth: 0.0,
+    //     Height: 2.2,
+    //     BetweenMarkers: 0.5,
+    //     Height_Correction: true,
+    //     Reject: "D",
+    //     MarkerColor: "",
+    //     ShutterSpeed: 100,
+    //     Xcoord: 0,
+    //     Ycoord: -1.25,
+    //     LeftPWM: 0.0,
+    //     RightPWM: 0.0,
+    // };
+    // const bigmovefrequency1={
+    //     MarkerFrequency_A: 5,
+    //     MarkerFrequency_B: 11,
+    // };
+
+
+    // const bigmoveparam2 ={
+    //     IsExploring: true,
+    //     TransitTime: 1,
+    //     Mu:0.3,
+    //     Sigma: 0.1,
+    //     Outer_Rth: 1,
+    //     Inner_Rth: 0.0,
+    //     Height: 2.2,
+    //     BetweenMarkers: 0.5,
+    //     Height_Correction: true,
+    //     Reject: "D",
+    //     MarkerColor: "",
+    //     ShutterSpeed: 100,
+    //     Xcoord: 10.25,
+    //     Ycoord: -1.25,
+    //     LeftPWM: 0.0,
+    //     RightPWM: 0.0,
+    // };
+    // const bigmovefrequency2={
+    //     MarkerFrequency_A: 5,
+    //     MarkerFrequency_B: 11,
+    // };
+
+
+    // const bigmoveparam3 ={
+    //     IsExploring: true,
+    //     TransitTime: 0.2,
+    //     Mu:0.3,
+    //     Sigma: 0.1,
+    //     Outer_Rth: 1,
+    //     Inner_Rth: 0,
+    //     Height: 2.2,
+    //     BetweenMarkers: 0.5,
+    //     Height_Correction: true,
+    //     Reject: "D",
+    //     MarkerColor: "",
+    //     ShutterSpeed: 10000,
+    //     Xcoord: 2.5,
+    //     Ycoord: -1.25,
+    //     LeftPWM: 0.0,
+    //     RightPWM: 0.0,
+    // };
+    // const bigmovefrequency3={
+    //     MarkerFrequency_A: 7,
+    //     MarkerFrequency_B: 5,
+    // };
+
+    // const bigmoveparam4 ={
+    //     IsExploring: true,
+    //     TransitTime: 0.2,
+    //     Mu:0,
+    //     Sigma: 0.1,
+    //     Outer_Rth: 0.2,
+    //     Inner_Rth: 0,
+    //     Height: 2.2,
+    //     BetweenMarkers: 0.5,
+    //     Height_Correction: true,
+    //     Reject: "D",
+    //     MarkerColor: "",
+    //     ShutterSpeed: 10000,
+    //     Xcoord: 4,
+    //     Ycoord: 0,
+    //     LeftPWM: 0.0,
+    //     RightPWM: 0.0,
+    // };
+    // const bigmovefrequency4={
+    //     MarkerFrequency_A: 11,
+    //     MarkerFrequency_B: 7,
+    // };
+
+    // const bigmoveparam5 ={
+    //     IsExploring: true,
+    //     TransitTime: 0.2,
+    //     Mu:0,
+    //     Sigma: 0.1,
+    //     Outer_Rth: 0.2,
+    //     Inner_Rth: 0,
+    //     Height: 2.2,
+    //     BetweenMarkers: 0.5,
+    //     Height_Correction: true,
+    //     Reject: "D",
+    //     MarkerColor: "",
+    //     ShutterSpeed: 10000,
+    //     Xcoord: 0,
+    //     Ycoord: 0,
+    //     LeftPWM: 0.0,
+    //     RightPWM: 0.0,
+    // };
+    // const bigmovefrequency5={
+    //     MarkerFrequency_A: 13,
+    //     MarkerFrequency_B: 0,
+    // };
+
+    // const bigmoveparam6 ={
+    //     IsExploring: true,
+    //     TransitTime: 0.2,
+    //     Mu:0.3,
+    //     Sigma: 0.1,
+    //     Outer_Rth: 1,
+    //     Inner_Rth: 0,
+    //     Height: 2.2,
+    //     BetweenMarkers: 0.5,
+    //     Height_Correction: true,
+    //     Reject: "D",
+    //     MarkerColor: "",
+    //     ShutterSpeed: 10000,
+    //     Xcoord: 4,
+    //     Ycoord: -0.9,
+    //     LeftPWM: 0.0,
+    //     RightPWM: 0.0,
+    // };
+    // const bigmovefrequency6={
+    //     MarkerFrequency_A: 9,
+    //     MarkerFrequency_B: 13,
+    // };
+
+    // const bigmoveparam7 ={
+    //     IsExploring: true,
+    //     TransitTime: 0.2,
+    //     Mu:0.25,
+    //     Sigma: 0.2,
+    //     Outer_Rth: 0.5,
+    //     Inner_Rth: 0,
+    //     Height: 2.2,
+    //     BetweenMarkers: 0.5,
+    //     Height_Correction: true,
+    //     Reject: "D",
+    //     MarkerColor: "",
+    //     ShutterSpeed: 10000,
+    //     Xcoord: 3.5,
+    //     Ycoord: 0,
+    //     LeftPWM: 0.0,
+    //     RightPWM: 0.0,
+    // };
+    // const bigmovefrequency789={
+    //     MarkerFrequency_A: 5,
+    //     MarkerFrequency_B: 9,
+    // };
+
+    // const bigmoveparam8 ={
+    //     IsExploring: true,
+    //     TransitTime: 0.2,
+    //     Mu:0.25,
+    //     Sigma: 0.2,
+    //     Outer_Rth: 0.5,
+    //     Inner_Rth: 0,
+    //     Height: 2.2,
+    //     BetweenMarkers: 0.5,
+    //     Height_Correction: true,
+    //     Reject: "D",
+    //     MarkerColor: "",
+    //     ShutterSpeed: 10000,
+    //     Xcoord: 3,
+    //     Ycoord: 0.5,
+    //     LeftPWM: 0.0,
+    //     RightPWM: 0.0,
+    // };
+    // const bigmoveparam9 ={
+    //     IsExploring: true,
+    //     TransitTime: 0.2,
+    //     Mu:0.25,
+    //     Sigma: 0.2,
+    //     Outer_Rth: 0.5,
+    //     Inner_Rth: 0,
+    //     Height: 2.2,
+    //     BetweenMarkers: 0.5,
+    //     Height_Correction: true,
+    //     Reject: "D",
+    //     MarkerColor: "",
+    //     ShutterSpeed: 10000,
+    //     Xcoord: 3,
+    //     Ycoord: -0.5,
+    //     LeftPWM: 0.0,
+    //     RightPWM: 0.0,
+    // };
+
+    const selectedIDA=[
         "192.168.1.204",
-        "192.168.1.214",
-        "192.168.1.221",
-        "192.168.1.213",
-        "192.168.1.198",
+        "192.168.1.200",
+        "192.168.1.202",
+        "192.168.1.238",
+        "192.168.1.285",
+        "192.168.1.242",
     ];
+    const selectedIDB=[
+        "192.168.1.206",
+        "192.168.1.201",
+        "192.168.1.207",
+        "192.168.1.208",
+        "192.168.1.196",
+        "192.168.1.186",
+        "192.168.1.247",
+    ];
+    const selectedIDC=[
+        "192.168.1.240",
+        "192.168.1.203",
+        "192.168.1.248",
+        "192.168.1.244",
+        "192.168.1.210",
+        "192.168.1.237",
 
-
-    const bigmoveparam1 ={
-        IsExploring: true,
-        TransitTime: 0.2,
-        Mu:0.3,
-        Sigma: 0.1,
-        Outer_Rth: 1,
-        Inner_Rth: 0.0,
-        Height: 2.2,
-        BetweenMarkers: 0.5,
-        Height_Correction: true,
-        Reject: "D",
-        MarkerColor: "",
-        ShutterSpeed: 100,
-        Xcoord: 0,
-        Ycoord: -1.25,
-        LeftPWM: 0.0,
-        RightPWM: 0.0,
-    };
-    const bigmovefrequency1={
-        MarkerFrequency_A: 5,
-        MarkerFrequency_B: 11,
-    };
-
-
-    const bigmoveparam2 ={
-        IsExploring: true,
-        TransitTime: 1,
-        Mu:0.3,
-        Sigma: 0.1,
-        Outer_Rth: 1,
-        Inner_Rth: 0.0,
-        Height: 2.2,
-        BetweenMarkers: 0.5,
-        Height_Correction: true,
-        Reject: "D",
-        MarkerColor: "",
-        ShutterSpeed: 100,
-        Xcoord: 10.25,
-        Ycoord: -1.25,
-        LeftPWM: 0.0,
-        RightPWM: 0.0,
-    };
-    const bigmovefrequency2={
-        MarkerFrequency_A: 5,
-        MarkerFrequency_B: 11,
-    };
-
-
-    const bigmoveparam3 ={
-        IsExploring: true,
-        TransitTime: 0.2,
-        Mu:0.3,
-        Sigma: 0.1,
-        Outer_Rth: 1,
-        Inner_Rth: 0,
-        Height: 2.2,
-        BetweenMarkers: 0.5,
-        Height_Correction: true,
-        Reject: "D",
-        MarkerColor: "",
-        ShutterSpeed: 10000,
-        Xcoord: 2.5,
-        Ycoord: -1.25,
-        LeftPWM: 0.0,
-        RightPWM: 0.0,
-    };
-    const bigmovefrequency3={
-        MarkerFrequency_A: 7,
-        MarkerFrequency_B: 5,
-    };
-
-    const bigmoveparam4 ={
-        IsExploring: true,
-        TransitTime: 0.2,
-        Mu:0,
-        Sigma: 0.1,
-        Outer_Rth: 0.2,
-        Inner_Rth: 0,
-        Height: 2.2,
-        BetweenMarkers: 0.5,
-        Height_Correction: true,
-        Reject: "D",
-        MarkerColor: "",
-        ShutterSpeed: 10000,
-        Xcoord: 4,
-        Ycoord: 0,
-        LeftPWM: 0.0,
-        RightPWM: 0.0,
-    };
-    const bigmovefrequency4={
-        MarkerFrequency_A: 11,
-        MarkerFrequency_B: 7,
-    };
-
-    const bigmoveparam5 ={
-        IsExploring: true,
-        TransitTime: 0.2,
-        Mu:0,
-        Sigma: 0.1,
-        Outer_Rth: 0.2,
-        Inner_Rth: 0,
-        Height: 2.2,
-        BetweenMarkers: 0.5,
-        Height_Correction: true,
-        Reject: "D",
-        MarkerColor: "",
-        ShutterSpeed: 10000,
-        Xcoord: 0,
-        Ycoord: 0,
-        LeftPWM: 0.0,
-        RightPWM: 0.0,
-    };
-    const bigmovefrequency5={
-        MarkerFrequency_A: 13,
-        MarkerFrequency_B: 0,
-    };
-
-    const bigmoveparam6 ={
-        IsExploring: true,
-        TransitTime: 0.2,
-        Mu:0.3,
-        Sigma: 0.1,
-        Outer_Rth: 1,
-        Inner_Rth: 0,
-        Height: 2.2,
-        BetweenMarkers: 0.5,
-        Height_Correction: true,
-        Reject: "D",
-        MarkerColor: "",
-        ShutterSpeed: 10000,
-        Xcoord: 4,
-        Ycoord: -0.9,
-        LeftPWM: 0.0,
-        RightPWM: 0.0,
-    };
-    const bigmovefrequency6={
-        MarkerFrequency_A: 9,
-        MarkerFrequency_B: 13,
-    };
-
-    const bigmoveparam7 ={
-        IsExploring: true,
-        TransitTime: 0.2,
-        Mu:0.25,
-        Sigma: 0.2,
-        Outer_Rth: 0.5,
-        Inner_Rth: 0,
-        Height: 2.2,
-        BetweenMarkers: 0.5,
-        Height_Correction: true,
-        Reject: "D",
-        MarkerColor: "",
-        ShutterSpeed: 10000,
-        Xcoord: 3.5,
-        Ycoord: 0,
-        LeftPWM: 0.0,
-        RightPWM: 0.0,
-    };
-    const bigmovefrequency789={
-        MarkerFrequency_A: 5,
-        MarkerFrequency_B: 9,
-    };
-
-    const bigmoveparam8 ={
-        IsExploring: true,
-        TransitTime: 0.2,
-        Mu:0.25,
-        Sigma: 0.2,
-        Outer_Rth: 0.5,
-        Inner_Rth: 0,
-        Height: 2.2,
-        BetweenMarkers: 0.5,
-        Height_Correction: true,
-        Reject: "D",
-        MarkerColor: "",
-        ShutterSpeed: 10000,
-        Xcoord: 3,
-        Ycoord: 0.5,
-        LeftPWM: 0.0,
-        RightPWM: 0.0,
-    };
-    const bigmoveparam9 ={
-        IsExploring: true,
-        TransitTime: 0.2,
-        Mu:0.25,
-        Sigma: 0.2,
-        Outer_Rth: 0.5,
-        Inner_Rth: 0,
-        Height: 2.2,
-        BetweenMarkers: 0.5,
-        Height_Correction: true,
-        Reject: "D",
-        MarkerColor: "",
-        ShutterSpeed: 10000,
-        Xcoord: 3,
-        Ycoord: -0.5,
-        LeftPWM: 0.0,
-        RightPWM: 0.0,
-    };
-
+    ];
     const selectedIDD=[
-        "192.168.1.245",
-        "192.168.1.197",
-        "192.168.1.195",
         "192.168.1.216",
-        "192.168.1.214",
+        "192.168.1.249",
+        "192.168.1.235",
+        "192.168.1.187",
+        "192.168.1.195",
+        "192.168.1.218",
+        "192.168.1.224",
+        "192.168.1.185"
     ];
     const selectedIDE=[
-        "",
+        "192.168.1.219",
+        "192.168.1.199",
+        "192.168.1.190",
+        "192.168.1.213",
+        "192.168.1.198",
+        "192.168.1.192",
+        "192.168.1.197",
     ];
     const  selectedIDF=[
-        "",
+        "192.168.1.214",
+        "192.168.1.245",
+        "192.168.1.188",
+        "192.168.1.246",
+        "192.168.1.215",
+        "192.168.1.236",
+        "192.168.1.221",
     ];
 
     const demoparam1 ={
@@ -484,16 +525,16 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
         BetweenMarkers: 0.5,
         Height_Correction: true,
         Reject: "D",
-        MarkerColor: "5_9",
-        ShutterSpeed: 10000,
-        Xcoord: 1,
-        Ycoord: 1.8,
+        MarkerColor: "5_11",
+        ShutterSpeed: 5000,
+        Xcoord: 1.77,
+        Ycoord: -0.5,
         LeftPWM: 0.0,
         RightPWM: 0.0,
     };
     const demofrequency1={
         MarkerFrequency_A: 5,
-        MarkerFrequency_B: 9,
+        MarkerFrequency_B: 11,
     };
 
     const demoparam2 ={
@@ -507,17 +548,17 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
         BetweenMarkers: 0.5,
         Height_Correction: true,
         Reject: "D",
-        MarkerColor: "5_9",
-        ShutterSpeed: 10000,
-        Xcoord: 3,
-        Ycoord: 0,
+        MarkerColor: "5_11",
+        ShutterSpeed: 5000,
+        Xcoord: 0.4,
+        Ycoord: 1.56,
         LeftPWM: 0.0,
         RightPWM: 0.0,
     };
 
     const demofrequency2={
         MarkerFrequency_A: 5,
-        MarkerFrequency_B: 9,
+        MarkerFrequency_B: 11,
     };
 
     const demoparam3 ={
@@ -531,17 +572,17 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
         BetweenMarkers: 0.5,
         Height_Correction: true,
         Reject: "D",
-        MarkerColor: "5_9",
-        ShutterSpeed: 10000,
-        Xcoord: -0.43,
-        Ycoord: -2.85,
+        MarkerColor: "5_11",
+        ShutterSpeed: 5000,
+        Xcoord: -2.05,
+        Ycoord: -0.26,
         LeftPWM: 0.0,
         RightPWM: 0.0,
     };
 
     const demofrequency3={
         MarkerFrequency_A: 5,
-        MarkerFrequency_B: 9,
+        MarkerFrequency_B: 11,
     };
 
     const demoparam4 ={
@@ -555,18 +596,111 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
         BetweenMarkers: 0.5,
         Height_Correction: true,
         Reject: "D",
-        MarkerColor: "5_11",
-        ShutterSpeed: 10000,
-        Xcoord: -0.88,
-        Ycoord: -2.2,
+        MarkerColor: "11_9",
+        ShutterSpeed: 5000,
+        Xcoord: 4,
+        Ycoord: -0.9,
         LeftPWM: 0.0,
         RightPWM: 0.0,
     };
 
     const demofrequency4={
-        MarkerFrequency_A: 5,
-        MarkerFrequency_B: 11,
+        MarkerFrequency_A: 11,
+        MarkerFrequency_B: 9,
     };
+    const demoparam5 ={
+        IsExploring: true,
+        TransitTime: 0.1,
+        Mu:0,
+        Sigma: 0.1,
+        Outer_Rth: 0.1,
+        Inner_Rth: 0.0,
+        Height: 2.2,
+        BetweenMarkers: 0.5,
+        Height_Correction: true,
+        Reject: "D",
+        MarkerColor: "11_9",
+        ShutterSpeed: 5000,
+        Xcoord: 0,
+        Ycoord: -0.9,
+        LeftPWM: 0.0,
+        RightPWM: 0.0,
+    };
+
+    const demofrequency5={
+        MarkerFrequency_A: 11,
+        MarkerFrequency_B: 9,
+    };
+
+    const demoparam6 ={
+        IsExploring: true,
+        TransitTime: 0.1,
+        Mu:0,
+        Sigma: 0.1,
+        Outer_Rth: 0.1,
+        Inner_Rth: 0.0,
+        Height: 2.2,
+        BetweenMarkers: 0.5,
+        Height_Correction: true,
+        Reject: "D",
+        MarkerColor: "11_9",
+        ShutterSpeed: 5000,
+        Xcoord: -4,
+        Ycoord: -2,
+        LeftPWM: 0.0,
+        RightPWM: 0.0,
+    };
+    const demofrequency6={
+        MarkerFrequency_A: 11,
+        MarkerFrequency_B: 9,
+    };
+
+    const demoparam7 ={
+        IsExploring: true,
+        TransitTime: 0.1,
+        Mu:0,
+        Sigma: 0.1,
+        Outer_Rth: 0.1,
+        Inner_Rth: 0.0,
+        Height: 2.2,
+        BetweenMarkers: 0.5,
+        Height_Correction: true,
+        Reject: "D",
+        MarkerColor: "13_7",
+        ShutterSpeed: 5000,
+        Xcoord: -0.5,
+        Ycoord: -0.5,
+        LeftPWM: 0.0,
+        RightPWM: 0.0,
+    };
+    const demofrequency7={
+        MarkerFrequency_A: 13,
+        MarkerFrequency_B: 7,
+    };
+    const demoparam8 ={
+        IsExploring: true,
+        TransitTime: 0.1,
+        Mu:0,
+        Sigma: 0.1,
+        Outer_Rth: 0.1,
+        Inner_Rth: 0.0,
+        Height: 2.2,
+        BetweenMarkers: 0.5,
+        Height_Correction: true,
+        Reject: "D",
+        MarkerColor: "9",
+        ShutterSpeed: 5000,
+        Xcoord: 0,
+        Ycoord: 0,
+        LeftPWM: 0.0,
+        RightPWM: 0.0,
+
+    };
+    const demofrequency8={
+        MarkerFrequency_A: 9,
+        MarkerFrequency_B: 0,
+    };
+
 
 
 
@@ -738,9 +872,9 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
                 <Button variant="contained" onClick={()=>{SendParam(param,frequency,selectedID)}} endIcon={<SendIcon />}>
                     Send
                 </Button>
-                 {/* {frequency.MarkerFrequency_A} {frequency.MarkerFrequency_B}  */}
-                 {/* {JSON.stringify(param)} */}
-                {/* <ShowGroup group="A" param={paramA} frequency={frequencyA} ID={selectedIDA}/>
+                 {frequency.MarkerFrequency_A} {frequency.MarkerFrequency_B} 
+                 {JSON.stringify(param)}
+                 {/* <ShowGroup group="A" param={paramA} frequency={frequencyA} ID={selectedIDA}/>
                 <Button variant="contained" onClick={()=>{SendParam(paramA,frequencyA,selectedIDA)}} endIcon={<SendIcon />}>
                     Send A
                 </Button>
@@ -751,8 +885,8 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
                 <ShowGroup group="B" param={paramB} frequency={frequencyB} ID={selectedIDB}/>
                 <Button variant="contained" onClick={()=>{SendParam(paramB,frequencyB,selectedIDB)}} endIcon={<SendIcon />}>
                     Send B
-                </Button> */}
-                <h2>大移動用</h2>
+                </Button> 
+                 <h2>大移動用</h2>
                 <ShowGroup group="A" param={bigmoveparam2} frequency={bigmovefrequency2} ID={bigmoveselectedIDA}/>
                 <Button variant="contained" onClick={()=>{SendParam(bigmoveparam2,bigmovefrequency2,bigmoveselectedIDA)}} endIcon={<SendIcon />}>
                     Aを2に(大移動)
@@ -806,13 +940,13 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
                 <ShowGroup group="B" param={bigmoveparam8} frequency={bigmovefrequency789} ID={bigmoveselectedIDB}/>
                 <Button variant="contained" onClick={()=>{SendParam(bigmoveparam8,bigmovefrequency789,bigmoveselectedIDB)}} endIcon={<SendIcon />}>
                     Bを8に(大移動)
-                </Button>
+                </Button> */}
 
-                <ShowGroup group="C" param={bigmoveparam1} frequency={bigmovefrequency1} ID={bigmoveselectedIDB}/>
+                {/* <ShowGroup group="C" param={bigmoveparam1} frequency={bigmovefrequency1} ID={bigmoveselectedIDB}/>
                 <Button variant="contained" onClick={()=>{SendParam(bigmoveparam1,bigmovefrequency1,bigmoveselectedIDB)}} endIcon={<SendIcon />}>
                     Cを1に(大移動)
-                </Button>
-
+                    </Button> */}
+{/* 
                 <ShowGroup group="C" param={bigmoveparam2} frequency={bigmovefrequency2} ID={bigmoveselectedIDC}/>
                 <Button variant="contained" onClick={()=>{SendParam(bigmoveparam2,bigmovefrequency2,bigmoveselectedIDC)}} endIcon={<SendIcon />}>
                     Cを2に(大移動)
@@ -836,8 +970,8 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
                 <ShowGroup group="C" param={bigmoveparam9} frequency={bigmovefrequency789} ID={bigmoveselectedIDC}/>
                 <Button variant="contained" onClick={()=>{SendParam(bigmoveparam9,bigmovefrequency789,bigmoveselectedIDC)}} endIcon={<SendIcon />}>
                     Cを9に(大移動)
-                </Button>
-                <h2>デモ用</h2>
+                </Button> */}
+                {/* <h2>デモ用</h2>
 
                 <ShowGroup group="D" param={demoparam1} frequency={demofrequency1} ID={selectedIDD}/>
                 <Button variant="contained" onClick={()=>{SendParam(demoparam1,demofrequency1,selectedIDD)}} endIcon={<SendIcon />}>
@@ -888,7 +1022,148 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
                 <ShowGroup group="F" param={demoparam4} frequency={demofrequency4} ID={selectedIDF}/>
                 <Button variant="contained" onClick={()=>{SendParam(demoparam4,demofrequency4,selectedIDF)}} endIcon={<SendIcon />}>
                     Fを3に停止(デモ)
+                </Button>  */}
+                <p>デモ2</p>
+                <ShowGroup group="A" param={demoparam6} frequency={demofrequency6} ID={selectedIDA}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam6,demofrequency6,selectedIDA)}} endIcon={<SendIcon />}>
+                    Aを6に(デモ)
                 </Button>
+                <ShowGroup group="A" param={demoparam7} frequency={demofrequency7} ID={selectedIDA}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam7,demofrequency7,selectedIDA)}} endIcon={<SendIcon />}>
+                    Aを7に(デモ)
+                </Button>
+
+                <ShowGroup group="A" param={demoparam8} frequency={demofrequency8} ID={selectedIDA}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam8,demofrequency8,selectedIDA)}} endIcon={<SendIcon />}>
+                    Aを8に(デモ)
+                </Button>
+
+                <ShowGroup group="B" param={demoparam5} frequency={demofrequency5} ID={selectedIDB}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam5,demofrequency5,selectedIDB)}} endIcon={<SendIcon />}>
+                    Bを5に(デモ)
+                </Button>
+
+                <ShowGroup group="B" param={demoparam6} frequency={demofrequency6} ID={selectedIDB}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam6,demofrequency6,selectedIDB)}} endIcon={<SendIcon />}>
+                    Bを6に(デモ)
+                </Button>
+                <ShowGroup group="B" param={demoparam7} frequency={demofrequency7} ID={selectedIDB}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam7,demofrequency7,selectedIDB)}} endIcon={<SendIcon />}>
+                    Bを7に(デモ)
+                </Button>
+                <ShowGroup group="B" param={demoparam8} frequency={demofrequency8} ID={selectedIDB}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam8,demofrequency8,selectedIDB)}} endIcon={<SendIcon />}>
+                    Bを8に(デモ)
+                </Button>
+
+                <ShowGroup group="C" param={demoparam4} frequency={demofrequency4} ID={selectedIDC}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam4,demofrequency4,selectedIDC)}} endIcon={<SendIcon />}>
+                    Cを4に(デモ)
+                </Button>
+                <ShowGroup group="C" param={demoparam5} frequency={demofrequency5} ID={selectedIDC}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam5,demofrequency5,selectedIDC)}} endIcon={<SendIcon />}>
+                    Cを5に(デモ)
+                </Button>
+                <ShowGroup group="C" param={demoparam6} frequency={demofrequency6} ID={selectedIDC}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam6,demofrequency6,selectedIDC)}} endIcon={<SendIcon />}>
+                    Cを6に(デモ)
+                </Button>
+                <ShowGroup group="C" param={demoparam7} frequency={demofrequency7} ID={selectedIDC}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam7,demofrequency7,selectedIDC)}} endIcon={<SendIcon />}>
+                    Cを7に(デモ)
+                </Button>
+                <ShowGroup group="C" param={demoparam8} frequency={demofrequency8} ID={selectedIDC}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam8,demofrequency8,selectedIDC)}} endIcon={<SendIcon />}>
+                    Cを8に(デモ)
+                </Button>
+                <ShowGroup group="D" param={demoparam3} frequency={demofrequency3} ID={selectedIDD}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam3,demofrequency3,selectedIDD)}} endIcon={<SendIcon />}>
+                    Dを3に(デモ)
+                </Button>
+                <ShowGroup group="D" param={demoparam4} frequency={demofrequency4} ID={selectedIDD}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam4,demofrequency4,selectedIDD)}} endIcon={<SendIcon />}>
+                    Dを4に(デモ)
+                </Button>
+                <ShowGroup group="D" param={demoparam5} frequency={demofrequency5} ID={selectedIDD}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam5,demofrequency5,selectedIDD)}} endIcon={<SendIcon />}>
+                    Dを5に(デモ)
+                </Button>
+                <ShowGroup group="D" param={demoparam6} frequency={demofrequency6} ID={selectedIDD}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam6,demofrequency6,selectedIDD)}} endIcon={<SendIcon />}>
+                    Dを6に(デモ)
+                </Button>
+                <ShowGroup group="D" param={demoparam7} frequency={demofrequency7} ID={selectedIDD}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam7,demofrequency7,selectedIDD)}} endIcon={<SendIcon />}>
+                    Dを7に(デモ)
+                </Button>
+                <ShowGroup group="D" param={demoparam8} frequency={demofrequency8} ID={selectedIDD}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam8,demofrequency8,selectedIDD)}} endIcon={<SendIcon />}>
+                    Dを8に(デモ)
+                </Button>
+                <ShowGroup group="E" param={demoparam2} frequency={demofrequency2} ID={selectedIDE}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam2,demofrequency2,selectedIDE)}} endIcon={<SendIcon />}>
+                    Eを2に(デモ)
+                </Button>
+                <ShowGroup group="E" param={demoparam3} frequency={demofrequency3} ID={selectedIDE}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam3,demofrequency3,selectedIDE)}} endIcon={<SendIcon />}>
+                    Eを3に(デモ)
+                </Button>
+                <ShowGroup group="E" param={demoparam4} frequency={demofrequency4} ID={selectedIDE}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam4,demofrequency4,selectedIDE)}} endIcon={<SendIcon />}>
+                    Eを4に(デモ)
+                </Button>
+                <ShowGroup group="E" param={demoparam5} frequency={demofrequency5} ID={selectedIDE}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam5,demofrequency5,selectedIDE)}} endIcon={<SendIcon />}>
+                    Eを5に(デモ)
+                </Button>
+                <ShowGroup group="E" param={demoparam6} frequency={demofrequency6} ID={selectedIDE}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam6,demofrequency6,selectedIDE)}} endIcon={<SendIcon />}>
+                    Eを6に(デモ)
+                </Button>
+                <ShowGroup group="E" param={demoparam7} frequency={demofrequency7} ID={selectedIDE}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam7,demofrequency7,selectedIDE)}} endIcon={<SendIcon />}>
+                    Eを7に(デモ)
+                </Button>
+                <ShowGroup group="E" param={demoparam8} frequency={demofrequency8} ID={selectedIDE}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam8,demofrequency8,selectedIDE)}} endIcon={<SendIcon />}>
+                    Eを8に(デモ)
+                </Button>
+                <ShowGroup group="F" param={demoparam1} frequency={demofrequency1} ID={selectedIDF}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam1,demofrequency1,selectedIDF)}} endIcon={<SendIcon />}>
+                    Fを1に(デモ)
+                </Button>
+                <ShowGroup group="F" param={demoparam2} frequency={demofrequency2} ID={selectedIDF}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam2,demofrequency2,selectedIDF)}} endIcon={<SendIcon />}>
+                    Fを2に(デモ)
+                </Button>
+                <ShowGroup group="F" param={demoparam3} frequency={demofrequency3} ID={selectedIDF}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam3,demofrequency3,selectedIDF)}} endIcon={<SendIcon />}>
+                    Fを3に(デモ)
+                </Button>
+                <ShowGroup group="F" param={demoparam4} frequency={demofrequency4} ID={selectedIDF}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam4,demofrequency4,selectedIDF)}} endIcon={<SendIcon />}>
+                    Fを4に(デモ)
+                </Button>
+                <ShowGroup group="F" param={demoparam5} frequency={demofrequency5} ID={selectedIDF}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam5,demofrequency5,selectedIDF)}} endIcon={<SendIcon />}>
+                    Fを5に(デモ)
+                </Button>
+                <ShowGroup group="F" param={demoparam6} frequency={demofrequency6} ID={selectedIDF}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam6,demofrequency6,selectedIDF)}} endIcon={<SendIcon />}>
+                    Fを6に(デモ)
+                </Button>
+                <ShowGroup group="F" param={demoparam7} frequency={demofrequency7} ID={selectedIDF}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam7,demofrequency7,selectedIDF)}} endIcon={<SendIcon />}>
+                    Fを7に(デモ)
+                </Button>
+                <ShowGroup group="F" param={demoparam8} frequency={demofrequency8} ID={selectedIDF}/>
+                <Button variant="contained" onClick={()=>{SendParam(demoparam8,demofrequency8,selectedIDF)}} endIcon={<SendIcon />}>
+                    Fを8に(デモ)
+                </Button>
+
+
+
+
 
 
 

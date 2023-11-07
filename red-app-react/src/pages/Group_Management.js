@@ -7,19 +7,19 @@ import { get_reddata } from "../components/Get_reddata";
 import { CollapsibleTable } from "../components/show_reddata";
 
 export const Group=()=>{
-    const IP="192.168.1.113";
-//   const [IP,setIP]=useState("");
-//     useEffect(()=>{
-//         const fetchIP=async()=>{
-//             try{
-//                 const IP=await getIP();
-//                 setIP(IP);
-//             }catch(error){
-//                 console.log(error);
-//             }
-//         };
-//         fetchIP();
-//     },[]);
+    // const IP="192.168.1.113";
+  const [IP,setIP]=useState("");
+    useEffect(()=>{
+        const fetchIP=async()=>{
+            try{
+                const IP=await getIP();
+                setIP(IP);
+            }catch(error){
+                console.log(error);
+            }
+        };
+        fetchIP();
+    },[]);
 
     const [ID,setID]=useState([]);
     useEffect(()=>{
