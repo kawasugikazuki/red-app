@@ -5,17 +5,17 @@ const app = express();
 const port = 3001;
 const mqtt=require('mqtt');
 //自分のPCでbrokerを立てる場合
-// const aedes=require('aedes')();
-// const server = require('net').createServer(aedes.handle);
+const aedes=require('aedes')();
+const server = require('net').createServer(aedes.handle);
 const port_aedes = 1883;
 
-// server.listen(port_aedes, function () {
-//     console.log('server started and listening on port ', port_aedes);
-// })
+server.listen(port_aedes, function () {
+    console.log('server started and listening on port ', port_aedes);
+})
 // const client_mqtt=mqtt.connect('mqtt://broker.emqx.io:1883',{clientId:'app'});
-// const client_mqtt=mqtt.connect('mqtt://localhost:1883',{clientId:'app'})
+const client_mqtt=mqtt.connect('mqtt://localhost:1883',{clientId:'app'})
 //安藤さんのPCのIPアドレスにする
-const client_mqtt=mqtt.connect('mqtt://192.168.1.113:1883',{clientId:'app'});
+// const client_mqtt=mqtt.connect('mqtt://192.168.1.113:1883',{clientId:'app'});
 
 
 const os = require('os');
@@ -34,7 +34,7 @@ client_mqtt.on('connect',()=>{
     client_mqtt.subscribe('+/Status');
     client_mqtt.subscribe('RED/+/Param');
     client_mqtt.subscribe('RED/+/CeilImage',{qos:1});
-    // client_mqtt.subscribe('RED/+/FloorImage',{qos:1});
+    client_mqtt.subscribe('RED/+/FloorImage',{qos:1});
     console.log("connect");
 });
 
@@ -74,18 +74,34 @@ app.post('/send_param', (req, res) => {
     const selectedID=req.body.selectedID;
     // console.log(param);
     // console.log(selectedID);
-    if (selectedID.length===0){
-            client_mqtt.publish('RED/Stutas',JSON.stringify(param),{qos:1});
-            // console.log(ID);
-    // client_mqtt.publish('RED/Status',JSON.stringify(param),{qos:1});
-    }else{
-        selectedID.map((ID)=>{
-            client_mqtt.publish('RED/'+ID+'/Param',JSON.stringify(param),{qos:1});
-            console.log(ID);
-            console.log(param);
-        });
-    }
+    async function send_param(){
+        try{
+            if (selectedID.length===0){
+                await publishMessage('RED/Stutas',JSON.stringify(param),{qos:1});
+            }else{
+                for (const ID of selectedID){
+                    await publishMessage('RED/'+ID+'/Param',JSON.stringify(param),{qos:1});
+                }
+            }
+                res.status(200).json({message: "param sent successfully"});
+        }catch(err){
+                console.log(err);
+                res.status(500).json({error: "Error sending param"});
+            }
+        }
+    send_param();
 });
+async function publishMessage(topic,message,options){
+    return new Promise((resolve,reject)=>{
+        client_mqtt.publish(topic,message,options,(err)=>{
+            if (err){
+                reject(err);
+            }else{
+                resolve();
+            }
+        });
+    });
+}
 
 
 
@@ -120,6 +136,7 @@ client_mqtt.on('message', (topic,message)=> {
         if (messagearray[0]==="connect"){
             if (!IPnowArray.includes(IP)){
                 IPnowArray.push(IP);
+                IPnowArray.sort();
                 // console.log(IPArray);
                 reddata[IP]={};
             }
@@ -159,10 +176,22 @@ client_mqtt.on('message', (topic,message)=> {
         // console.log(messagestring);
     }
     if (topic.includes("CeilImage")){
-        CeilImage=JSON.parse(message);
+        Ceil_dict=JSON.parse(message);
+        // console.log(Ceil_dict);
+        if (reddata[topic.split("/")[1]]){
+            reddata[topic.split("/")[1]].CeilImage=Ceil_dict;
+        }
+        CeilImage=Ceil_dict;
+        // console.log(CeilImage);
     }
     if (topic.includes("FloorImage")){
-        FloorImage=JSON.parse(message);
+        Floor_dict=JSON.parse(message);
+        if (reddata[topic.split("/")[1]]){
+            reddata[topic.split("/")[1]].FloorImage=Floor_dict;
+        }
+        
+        FloorImage=Floor_dict;
+        // console.log(FloorImage);
     }
     if(topic.includes("Param")){
         const messagestring=message.toString();
@@ -190,9 +219,9 @@ app.get('/get_reddata', (req, res) => {
 app.get('/get_Ceilimage', (req, res) => {
     res.json(CeilImage);
 });
-// app.get('/get_Floorimage', (req, res) => {
-//     res.json(FloorImage);
-// });
+app.get('/get_Floorimage', (req, res) => {
+    res.json(FloorImage);
+});
 
 
 app.listen(port, () => {

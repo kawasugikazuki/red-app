@@ -55,6 +55,7 @@ export const Group=()=>{
             <div>
                 <h1>**Swarm System Operation and Management**</h1>
                 <h2>Server's IP address :{IP}</h2>
+                
                 <ul>{ID.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
 
                 <CollapsibleTable reddata={reddata}/>

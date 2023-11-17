@@ -3,7 +3,7 @@ import React from "react";
 export function ShowGroup({group,param,frequency,ID}){
     return(
         <div>
-            <h2>{group}</h2>
+            {/* <h2>{group}</h2> */}
             <p>TransitTime:{param.TransitTime}</p>
             <p>Mu:{param.Mu}</p>
             <p>Sigma:{param.Sigma}</p>
@@ -13,7 +13,7 @@ export function ShowGroup({group,param,frequency,ID}){
             <p>frequencyB:{frequency.MarkerFrequency_B}</p>
             <p>ShutterSpeed:{param.ShutterSpeed}</p>
             <p>X:{param.Xcoord},Y:{param.Ycoord}</p>
-            <p>ID:{JSON.stringify(ID)}</p>
+            {/* <p>ID:{JSON.stringify(ID)}</p> */}
         </div>
     );
 }
