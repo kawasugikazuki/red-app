@@ -8,6 +8,8 @@ const mqtt=require('mqtt');
 const aedes=require('aedes')();
 const server = require('net').createServer(aedes.handle);
 const port_aedes = 1883;
+const path = require('path');
+const fs = require('fs');
 
 server.listen(port_aedes, function () {
     console.log('server started and listening on port ', port_aedes);
@@ -47,22 +49,25 @@ app.post('/UDP', (req, res) => {
 
     const client = dgram.createSocket('udp4');
 
-    client.bind(()=>{
+    if (serverhost === "255.255.255.255"){
+        client.bind(()=>{
         client.setBroadcast(true);
-    });
+        });
 
-    client.send(message, serverport, serverhost, (err) => {
-        if (err) {
+        client.send(message, serverport, serverhost, (err) => {
+            if (err) {
             console.error('Error sending broadcast message:', err);
             res.status(500).json({error: "Error sending UDP message" });
             
-        } else {
+            } else {
             console.log({message});
             res.json({message: "UDP message sent successfully"});
             
             }
-          client.close();
-    });
+            client.close();
+        });
+    }
+    
 });
 
 app.get('/', (req, res) => {
@@ -77,7 +82,7 @@ app.post('/send_param', (req, res) => {
     async function send_param(){
         try{
             if (selectedID.length===0){
-                await publishMessage('RED/Stutas',JSON.stringify(param),{qos:1});
+                await publishMessage('RED/Status',JSON.stringify(param),{qos:1});
             }else{
                 for (const ID of selectedID){
                     await publishMessage('RED/'+ID+'/Param',JSON.stringify(param),{qos:1});
@@ -115,6 +120,31 @@ app.get('/get_IP', (req, res) => {
 //   console.log(ipv4.address);
 })();
 });
+
+function saveImage(image,topic){
+    const filename=Object.keys(image)[0];
+    const imageData=Buffer.from(image[filename],'base64');
+    const redIP=topic.split("/")[1];
+    const imageDir="images";
+    if (!fs.existsSync(imageDir)){
+        fs.mkdirSync(imageDir);
+    }
+    const robotDir=imageDir+"/"+redIP;
+    if (!fs.existsSync(robotDir)){
+        fs.mkdirSync(robotDir);
+    }
+    const now = new Date();
+    const timestamp = `${now.getFullYear()}_${(now.getMonth() + 1).toString().padStart(2, '0')}_${now.getDate().toString().padStart(2, '0')}_` +
+                 `${now.getHours().toString().padStart(2, '0')}_${now.getMinutes().toString().padStart(2, '0')}_${now.getSeconds().toString().padStart(2, '0')}_${now.getMilliseconds().toString().padStart(3, '0')}`;
+    const filepath=path.join(robotDir,`${timestamp}_${filename}`);
+    fs.writeFileSync(filepath,imageData,(err)=>{
+        if (err){
+            console.log(err);
+        }else{
+            console.log("Image saved");
+        }
+    });
+}
 
 const IPnowArray=[];
 let RobotStatus={};
@@ -183,6 +213,7 @@ client_mqtt.on('message', (topic,message)=> {
         }
         CeilImage=Ceil_dict;
         // console.log(CeilImage);
+        saveImage(Ceil_dict,topic);
     }
     if (topic.includes("FloorImage")){
         Floor_dict=JSON.parse(message);
@@ -192,13 +223,14 @@ client_mqtt.on('message', (topic,message)=> {
         
         FloorImage=Floor_dict;
         // console.log(FloorImage);
+        saveImage(Floor_dict,topic);
     }
     if(topic.includes("Param")){
         const messagestring=message.toString();
         param=JSON.parse(messagestring);
         const parts=topic.split("/");
         const IP=parts[1];
-        // reddata[IP].param=param;
+        reddata[IP].param=param;
         // console.log(messagestring);
     }
     if(topic.includes("RED/Status")){
