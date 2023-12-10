@@ -10,6 +10,20 @@ export function SendParam(param,frequency,selectedID) {
     }
     // console.log(param.MarkerColor);
 
+    param.TransitTime=parseFloat(param.TransitTime);
+    param.Mu=parseFloat(param.Mu);
+    param.Sigma=parseFloat(param.Sigma);
+    param.Outer_Rth=parseFloat(param.Outer_Rth);
+    param.Inner_Rth=parseFloat(param.Inner_Rth);
+    param.Height=parseFloat(param.Height);
+    param.BetweenMarkers=parseFloat(param.BetweenMarkers);
+    param.ShutterSpeed=parseInt(param.ShutterSpeed);
+    param.Xcoord=parseFloat(param.Xcoord);
+    param.Ycoord=parseFloat(param.Ycoord);
+    param.LeftPWM=parseFloat(param.LeftPWM);
+    param.RightPWM=parseFloat(param.RightPWM);
+   
+
 
 
     const sendparam={param,selectedID};

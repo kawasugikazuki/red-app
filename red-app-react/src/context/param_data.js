@@ -1,7 +1,6 @@
-export const fruits = ["apple", "banana", "orange", "grape", "mango"]; 
 export const param = {
     IsExploring: false,
-    TransitTime1: 2.0,
+    TransitTime: 2.0,
     Mu:1.0,
     Sigma: 1.0,
     Outer_Rth: 3.0,
@@ -17,3 +16,5 @@ export const param = {
     LeftPWM: 0.0,
     RightPWM: 0.0
 };
+
+export const paramset = {};
