@@ -8,10 +8,10 @@ import {Algorithm} from "./pages/Algorithm_Mode";
 import Appstyle from "./Appstyle.css";
 
 
+
 function App() {
   return (
     <BrowserRouter>
-     
        <ul>
          <li>
             <Link to="/">
@@ -47,7 +47,10 @@ function App() {
           <Route path="/Radicon" component={Radicon} />
           <Route path="/Group" component={Group} />
           <Route path="/Entire" component={Entire} />
-          <Route path="/Algorithm" component={Algorithm} />
+          <Route 
+          path="/Algorithm" 
+          component={Algorithm}
+           />
          <Route component={Notfound} />
         </Switch>
         

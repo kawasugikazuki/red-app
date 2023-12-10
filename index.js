@@ -67,6 +67,8 @@ app.post('/UDP', (req, res) => {
             client.close();
         });
     }
+    //個別送信のコードを書く
+    
     
 });
 

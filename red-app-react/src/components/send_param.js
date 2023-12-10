@@ -1,6 +1,7 @@
 export function SendParam(param,frequency,selectedID) {
-    // console.log(frequency);
-    if(frequency.MarkerFrequency_A>0 && frequency.MarkerFrequency_B>0){
+    if (frequency===true){
+        console.log("frequency is true");
+    }else if(frequency.MarkerFrequency_A>0 && frequency.MarkerFrequency_B>0){
         param.MarkerColor=String(frequency.MarkerFrequency_A)+"_"+String(frequency.MarkerFrequency_B);
     }else if ( frequency.MarkerFrequency_B===0){
         param.MarkerColor=String(frequency.MarkerFrequency_A);

@@ -16,11 +16,14 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import { ShowGroup } from "../components/ShowGroup";
+import isEqual from 'lodash/isEqual';
+import { useFruits } from "../context/fruit-hooks";
 
 
 
 
 export const Algorithm = () =>{
+const {paramState,paramDispatch,removeFruit}=useFruits();
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -101,6 +104,31 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
     const handleChangeID = (event, value) => {
         setSelectedID(value);
     }
+    const handleChangeparam = (event,value) => {
+        setSelectedparam(value);
+    }
+
+
+
+    const [paramset,setParamSet]=useState([]);
+    const [selectedparam,setSelectedparam]=useState([]);
+
+
+    const param_preserve=(param,frequency)=>{
+        if(frequency.MarkerFrequency_A>0 && frequency.MarkerFrequency_B>0){
+            param.MarkerColor=String(frequency.MarkerFrequency_A)+"_"+String(frequency.MarkerFrequency_B);
+        }else if ( frequency.MarkerFrequency_B===0){
+            param.MarkerColor=String(frequency.MarkerFrequency_A);
+        }else if ( frequency.MarkerFrequency_A===0){
+            param.MarkerColor=String(frequency.MarkerFrequency_B);
+        }
+        const isObjectInArray = paramset.some((item) => isEqual(item, param));
+
+        if (!isObjectInArray) {
+        setParamSet((prevParamSet) => [...prevParamSet, {...param}]);
+        }
+    }
+
 
     // const paramA={
     //     IsExploring: true,
@@ -817,20 +845,20 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
         return(
+
             <div>
                 <h1>**Algorithm Control Mode**</h1>
+                <TextField
+                required
+                id="TransitTime1"
+                label="TransitTime1"
+                value={paramState.TransitTime1}
+                onChange={(event)=>paramDispatch({type:"SET_PARAM",name:"TransitTime1",payload:event.target.value})}
+                />
+                <p>{JSON.stringify(paramState)}</p>
+
+
                 <Autocomplete
                     multiple
                     id="checkboxes-tags-demo"
@@ -986,13 +1014,57 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
                 </p>  
                 </FormGroup>
 
-                <Button variant="contained" onClick={()=>{SendParam(param,frequency,selectedID)}} endIcon={<SendIcon />}>
+
+                <div>
+                 <Button variant="contained" onClick={()=>{SendParam(param,frequency,selectedID)}} endIcon={<SendIcon />}>
                     Send
                 </Button>
-                 {frequency.MarkerFrequency_A} {frequency.MarkerFrequency_B} 
-                 {JSON.stringify(param)}
+                </div>
 
-                 
+                <Button variant="contained" onClick={()=>{param_preserve(param,frequency)}}>
+                    param preserve
+                </Button>
+                {paramset.map((paramset,index) => (
+                    <div key={index}>
+                        <p>
+                        {index}:IsExploring:{JSON.stringify(paramset.IsExploring)},TransitTime:{paramset.TransitTime},Mu:{paramset.Mu},Sigma:{paramset.Sigma},Outer_Rth:{paramset.Outer_Rth},Inner_Rth:{paramset.Inner_Rth},Reject:{paramset.Reject},MarkerFrequency:{paramset.MarkerColor},Xcoord:{paramset.Xcoord},Yccord:{paramset.Ycoord}
+                        </p>
+                    </div>
+                ))}
+
+                 <Autocomplete
+                    multiple={false}
+                    id="checkboxes-tags-demo"
+                    options={paramset}
+                    disableCloseOnSelect
+                    onChange={handleChangeparam}
+                    getOptionLabel={(option) => JSON.stringify(option)}
+                    renderOption={(props, option, { selected }) => (
+                        <li {...props}>
+                            <Checkbox
+                            icon={icon}
+                            checkedIcon={checkedIcon}
+                            style={{ marginRight: 8 }}
+                            checked={selected}
+                            />
+                            <span>{paramset.indexOf(option)}</span>
+                        </li>
+                    )}
+                    style={{ width: 500 }}
+                    renderInput={(params) => (
+                        <TextField {...params} label="paramset" />
+                    )}
+                />
+                {/* {JSON.stringify(selectedparam)} */}
+                <Button variant="contained" onClick={()=>{SendParam(selectedparam,true,selectedID)}} endIcon={<SendIcon />}>
+                    Send paramset
+                </Button>
+
+                 {/* {frequency.MarkerFrequency_A} {frequency.MarkerFrequency_B}  */}
+                 {/* {JSON.stringify(param)} */}
+                 {/* {JSON.stringify(paramset)} */}
+
+            
                  {/* <ShowGroup group="A" param={paramA} frequency={frequencyA} ID={selectedIDA}/>
                 <Button variant="contained" onClick={()=>{SendParam(paramA,frequencyA,selectedIDA)}} endIcon={<SendIcon />}>
                     Send A
@@ -1142,7 +1214,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
                 <Button variant="contained" onClick={()=>{SendParam(demoparam4,demofrequency4,selectedIDF)}} endIcon={<SendIcon />}>
                     Fを3に停止(デモ)
                 </Button>  */}
-                <p>デモ2</p>
+                {/* <p>デモ2</p> */}
                 {/* <ShowGroup group="A" param={demoparam55} frequency={demofrequency55} ID={selectedIDA}/>
                 <Button variant="contained" onClick={()=>{SendParam(demoparam55,demofrequency55,selectedIDA)}} endIcon={<SendIcon />}>
                     ① AをFreq9に(デモ)
@@ -1255,7 +1327,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
                     ⑧Eをfreq9に(デモ)
                 </Button> */}
 
-                <ShowGroup group="F" param={demoparam4} frequency={demofrequency4} ID={selectedIDF}/>
+                {/* <ShowGroup group="F" param={demoparam4} frequency={demofrequency4} ID={selectedIDF}/>
                 <Button variant="contained" onClick={()=>{SendParam(demoparam4,demofrequency4,selectedIDA)}} endIcon={<SendIcon />}>
                     Aをfreq11の前に(デモ)
                 </Button>
@@ -1334,7 +1406,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
                 </Button>
                 <Button variant="contained" onClick={()=>{SendParam(demoparam6,demofrequency6,selectedIDF)}} endIcon={<SendIcon />}>
                     ⑦Fをfreq13に(デモ)
-                </Button>
+                </Button> */}
 
                 {/* <ShowGroup group="F" param={demoparam7} frequency={demofrequency7} ID={selectedIDF}/>
                 <Button variant="contained" onClick={()=>{SendParam(demoparam7,demofrequency7,selectedIDA)}} endIcon={<SendIcon />}>
@@ -1376,7 +1448,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
                 <Button variant="contained" onClick={()=>{SendParam(demoparam8,demofrequency8,selectedIDF)}} endIcon={<SendIcon />}>
                     ⑨Fをfreq9に(デモ)
                 </Button>  */}
-                <ShowGroup group="A" param={demoparam8} frequency={demofrequency8} ID={selectedIDA}/>
+                {/* <ShowGroup group="A" param={demoparam8} frequency={demofrequency8} ID={selectedIDA}/>
                 <Button variant="contained" onClick={()=>{SendParam(demoparam8,demofrequency8,selectedIDA)}} endIcon={<SendIcon />}>
                     ⑧Aを⑧に(デモ)
                 </Button>
@@ -1401,54 +1473,54 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
                 <p>A回す</p>
                 {/* <ShowGroup group="D" param={demoparam1} frequency={demofrequency1} ID={selectedIDD}/> */}
-                <Button variant="contained" onClick={()=>{SendParam(demoparam1,demofrequency1,selectedIDA)}} endIcon={<SendIcon />}>
+                {/* <Button variant="contained" onClick={()=>{SendParam(demoparam1,demofrequency1,selectedIDA)}} endIcon={<SendIcon />}>
                     Aを1に(回転デモ)
                 </Button>
                 {/* <ShowGroup group="D" param={demoparam2} frequency={demofrequency2} ID={selectedIDD}/> */}
-                <Button variant="contained" onClick={()=>{SendParam(demoparam2,demofrequency2,selectedIDA)}} endIcon={<SendIcon />}>
+                {/* <Button variant="contained" onClick={()=>{SendParam(demoparam2,demofrequency2,selectedIDA)}} endIcon={<SendIcon />}>
                     Aを2に(回転デモ)
-                </Button>
+                </Button> */}
                 {/* <ShowGroup group="D" param={demoparam3} frequency={demofrequency3} ID={selectedIDD}/> */}
-                <Button variant="contained" onClick={()=>{SendParam(demoparam3,demofrequency3,selectedIDA)}} endIcon={<SendIcon />}>
+                {/* <Button variant="contained" onClick={()=>{SendParam(demoparam3,demofrequency3,selectedIDA)}} endIcon={<SendIcon />}>
                     Aを3に(回転デモ)
-                </Button>
+                </Button> */}
                 {/* <ShowGroup group="D" param={demoparam44} frequency={demofrequency44} ID={selectedIDD}/> */}
-                <Button variant="contained" onClick={()=>{SendParam(demoparam44,demofrequency44,selectedIDA)}} endIcon={<SendIcon />}>
+                {/* <Button variant="contained" onClick={()=>{SendParam(demoparam44,demofrequency44,selectedIDA)}} endIcon={<SendIcon />}>
                     Aを4に(回転デモ)
                 </Button> 
-                <p>B回す</p>
+                <p>B回す</p> */}
                 {/* <ShowGroup group="E" param={demoparam1} frequency={demofrequency1} ID={selectedIDE}/> */}
-                <Button variant="contained" onClick={()=>{SendParam(demoparam1,demofrequency1,selectedIDB)}} endIcon={<SendIcon />}>
+                {/* <Button variant="contained" onClick={()=>{SendParam(demoparam1,demofrequency1,selectedIDB)}} endIcon={<SendIcon />}>
                     Bを1に(回転デモ)
-                </Button>
+                </Button> */}
                 {/* <ShowGroup group="E" param={demoparam2} frequency={demofrequency2} ID={selectedIDE}/> */}
-                <Button variant="contained" onClick={()=>{SendParam(demoparam2,demofrequency2,selectedIDB)}} endIcon={<SendIcon />}>
+                {/* <Button variant="contained" onClick={()=>{SendParam(demoparam2,demofrequency2,selectedIDB)}} endIcon={<SendIcon />}>
                     Bを2に(回転デモ)
-                </Button>
+                </Button> */}
                 {/* <ShowGroup group="E" param={demoparam3} frequency={demofrequency3} ID={selectedIDE}/> */}
-                <Button variant="contained" onClick={()=>{SendParam(demoparam3,demofrequency3,selectedIDB)}} endIcon={<SendIcon />}>
+                {/* <Button variant="contained" onClick={()=>{SendParam(demoparam3,demofrequency3,selectedIDB)}} endIcon={<SendIcon />}>
                     Bを3に(回転デモ)
-                </Button>
+                </Button> */}
                 {/* <ShowGroup group="E" param={demoparam44} frequency={demofrequency44} ID={selectedIDE}/> */}
-                <Button variant="contained" onClick={()=>{SendParam(demoparam44,demofrequency44,selectedIDB)}} endIcon={<SendIcon />}>
+                {/* <Button variant="contained" onClick={()=>{SendParam(demoparam44,demofrequency44,selectedIDB)}} endIcon={<SendIcon />}>
                     Bを4に(回転デモ)
                 </Button>
 
-                <p>C回す</p>
+                <p>C回す</p> */}
                 {/* <ShowGroup group="F" param={demoparam1} frequency={demofrequency1} ID={selectedIDF}/> */}
-                <Button variant="contained" onClick={()=>{SendParam(demoparam1,demofrequency1,selectedIDC)}} endIcon={<SendIcon />}>
+                {/* <Button variant="contained" onClick={()=>{SendParam(demoparam1,demofrequency1,selectedIDC)}} endIcon={<SendIcon />}>
                     Cを1に(回転デモ)
-                </Button>
+                </Button> */}
                 {/* <ShowGroup group="F" param={demoparam2} frequency={demofrequency2} ID={selectedIDF}/> */}
-                <Button variant="contained" onClick={()=>{SendParam(demoparam2,demofrequency2,selectedIDC)}} endIcon={<SendIcon />}>
+                {/* <Button variant="contained" onClick={()=>{SendParam(demoparam2,demofrequency2,selectedIDC)}} endIcon={<SendIcon />}>
                     Cを2に(回転デモ)
-                </Button>
+                </Button> */}
                 {/* <ShowGroup group="F" param={demoparam3} frequency={demofrequency3} ID={selectedIDF}/> */}
-                <Button variant="contained" onClick={()=>{SendParam(demoparam3,demofrequency3,selectedIDC)}} endIcon={<SendIcon />}>
+                {/* <Button variant="contained" onClick={()=>{SendParam(demoparam3,demofrequency3,selectedIDC)}} endIcon={<SendIcon />}>
                     Cを3に(回転デモ)
-                </Button>
+                </Button> */}
                 {/* <ShowGroup group="F" param={demoparam44} frequency={demofrequency44} ID={selectedIDF}/> */}
-                <Button variant="contained" onClick={()=>{SendParam(demoparam44,demofrequency44,selectedIDC)}} endIcon={<SendIcon />}>
+                {/* <Button variant="contained" onClick={()=>{SendParam(demoparam44,demofrequency44,selectedIDC)}} endIcon={<SendIcon />}>
                     Cを4に(回転デモ)
                 </Button>
 
@@ -1471,7 +1543,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
                 </Button>
                 <Button variant="contained" onClick={()=>{SendParam(demoparam9,demofrequency9,selectedIDF)}} endIcon={<SendIcon />}>
                     Fを止める
-                </Button> 
+                </Button>  */}
 
 
 
