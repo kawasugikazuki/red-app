@@ -53,7 +53,6 @@ app.post('/UDP', (req, res) => {
         client.bind(()=>{
         client.setBroadcast(true);
         });
-
         client.send(message, serverport, serverhost, (err) => {
             if (err) {
             console.error('Error sending broadcast message:', err);
@@ -66,8 +65,21 @@ app.post('/UDP', (req, res) => {
             }
             client.close();
         });
+    }else{
+        //個別送信のコードを書く
+        client.send(message,serverport,serverhost,(err)=>{
+            if (err){
+                console.error("error sending unicast message",err);
+                res.status(500).json({error: "error sending unicast message"});
+            }else{
+                console.log({message});
+                res.json({message: "UDP message sent successfully"});
+            }
+            client.close();
+
+        });
     }
-    //個別送信のコードを書く
+    
     
     
 });
