@@ -35,8 +35,14 @@ const param = {
 export const ParamProvider=({children})=>{
     const [paramState,paramDispatch]=useReducer(paramReducer,param);
     const [paramset,setParamset]=useState([]);
+    const [frequency,setFrequency]=useState(
+        {
+            MarkerFrequency_A: 0,
+            MarkerFrequency_B: 0,
+        }
+    );
     return(
-        <ParamContext.Provider value={{paramState,paramDispatch,paramset,setParamset}}>
+        <ParamContext.Provider value={{paramState,paramDispatch,paramset,setParamset,frequency,setFrequency}}>
             {children}
         </ParamContext.Provider>
     );

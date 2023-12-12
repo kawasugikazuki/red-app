@@ -22,7 +22,7 @@ import { useParam } from "../context/param-hooks";
 
 
 export const Algorithm = () =>{
-const {paramState,paramDispatch,paramset,setParamset}=useParam();
+const {paramState,paramDispatch,paramset,setParamset,frequency,setFrequency}=useParam();
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -46,22 +46,12 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
         };
     },[ID]);
 
-    const [frequency,setFrequency]=useState({
-        MarkerFrequency_A: 0,
-        MarkerFrequency_B: 0,
-    });
 
 
     const handleChangefreqency = (event) => {
         const id=event.target.id;
         const value=event.target.value;
-    
-        if (!isNaN(value)) {
-            const num =parseFloat(value);
-            setFrequency({...frequency,[id]:num});
-        }else{
-            alert("Please enter a number");
-        }
+        setFrequency({...frequency,[id]:value});
     }
 
 
