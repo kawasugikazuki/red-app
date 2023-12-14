@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useState,useEffect } from "react";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import {Time} from "./pages/Title_and_Time";
 import {Radicon} from "./pages/Radicon_Mode";
@@ -6,12 +6,41 @@ import {Group} from "./pages/Group_Management";
 import {Entire} from "./pages/Entire_Management";
 import {Algorithm} from "./pages/Algorithm_Mode";
 import Appstyle from "./Appstyle.css";
+import { useMqtt } from "./context/mqtt-hooks";
+import { getIP } from "./components/Get_brokerIP";
+
 
 
 
 function App() {
+  const [serverIP,setServerIP]=useState("");
+  const { mqttConnect, connectStatus, client, allIP, nowIP, reddata } = useMqtt();
+  const mqttstate={connectStatus,client,allIP,nowIP,reddata};
+  useEffect(()=>{
+      const fetchIP=async()=>{
+          try{
+              const serverIP=await getIP();
+              setServerIP(serverIP);
+              console.log(serverIP);
+          }catch(error){
+              console.log(error);
+          }
+      };
+      fetchIP();
+  },[serverIP]);
+  useEffect(()=>{
+      if(serverIP){
+          mqttConnect(serverIP);
+      }
+  },[serverIP]);
+
+  useEffect(() => {
+    console.log("MQTT状態が更新されました:", mqttstate);
+  }, [mqttstate.connectStatus, mqttstate.client, mqttstate.allIP, mqttstate.nowIP]);
+  
   return (
     <BrowserRouter>
+      <h1>{JSON.stringify(mqttstate)}</h1>
        <ul>
          <li>
             <Link to="/">
@@ -55,7 +84,6 @@ function App() {
         </Switch>
         
     </BrowserRouter>
-    
   );
 }
 

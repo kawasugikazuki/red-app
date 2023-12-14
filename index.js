@@ -11,9 +11,30 @@ const port_aedes = 1883;
 const path = require('path');
 const fs = require('fs');
 
+const ws = require('websocket-stream');
+const http = require('http');
+
+const httpServer = http.createServer();
+ws.createServer({ server: httpServer }, aedes.handle);
+
+const wsPort = 3000;
+httpServer.listen(wsPort, function () {
+  console.log('Aedes WebSocket listening on port:', wsPort);
+});
+
+
+
 server.listen(port_aedes, function () {
     console.log('server started and listening on port ', port_aedes);
 })
+
+aedes.on('client', function (client) {
+    console.log(client.id)
+})
+aedes.on('clientDisconnect', function (client) {
+    console.log('Client Disconnected:', client.id);
+});
+
 // const client_mqtt=mqtt.connect('mqtt://broker.emqx.io:1883',{clientId:'app'});
 const client_mqtt=mqtt.connect('mqtt://localhost:1883',{clientId:'app'})
 //安藤さんのPCのIPアドレスにする

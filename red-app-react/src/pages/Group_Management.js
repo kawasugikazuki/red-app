@@ -8,12 +8,12 @@ import { CollapsibleTable } from "../components/show_reddata";
 
 export const Group=()=>{
     // const IP="192.168.1.113";
-  const [IP,setIP]=useState("");
+  const [serverIP,setServerIP]=useState("");
     useEffect(()=>{
         const fetchIP=async()=>{
             try{
-                const IP=await getIP();
-                setIP(IP);
+                const serverIP=await getIP();
+                setServerIP(serverIP);
             }catch(error){
                 console.log(error);
             }
@@ -54,7 +54,7 @@ export const Group=()=>{
         return(
             <div>
                 <h1>**Swarm System Operation and Management**</h1>
-                <h2>Server's IP address :{IP}</h2>
+                <h2>Server's IP address :{serverIP}</h2>
                 
                 <ul>{ID.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
 
@@ -62,7 +62,7 @@ export const Group=()=>{
                            
         
                 {/* IPに気をつける */}
-                <Button variant="outlined" onClick={()=>{udp("BrokerIP_is_"+IP+"_Exploration Tag","50003",broadcast)}}>BrokerIP</Button>
+                <Button variant="outlined" onClick={()=>{udp("BrokerIP_is_"+serverIP+"_Exploration Tag","50003",broadcast)}}>BrokerIP</Button>
                 <Button variant="outlined" onClick={()=>{udp("StartExplore","50000",broadcast)}}>Start Explore</Button>
                 <Button variant="outlined" onClick={()=>{udp("Shutdown","50002",broadcast)}}>Shutdown</Button>
                 <Button variant="outlined" onClick={()=>{udp("Restart","50001",broadcast)}}>Restart</Button>
