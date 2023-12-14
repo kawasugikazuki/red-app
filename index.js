@@ -17,7 +17,7 @@ const http = require('http');
 const httpServer = http.createServer();
 ws.createServer({ server: httpServer }, aedes.handle);
 
-const wsPort = 3000;
+const wsPort = 3003;
 httpServer.listen(wsPort, function () {
   console.log('Aedes WebSocket listening on port:', wsPort);
 });

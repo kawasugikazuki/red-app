@@ -107,7 +107,7 @@ export const MqttProvider=({children})=>{
         }
         const mqttOption={clientId:"webapp"}
 
-        const client=mqtt.connect(`ws://${serverIP}:3000`,mqttOption);
+        const client=mqtt.connect(`ws://${serverIP}:3003`,mqttOption);
             
             client.on('connect', () => {
                 mqttDispatch({ type: 'CONNECTED'});
