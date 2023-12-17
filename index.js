@@ -10,6 +10,7 @@ const server = require('net').createServer(aedes.handle);
 const port_aedes = 1883;
 const path = require('path');
 const fs = require('fs');
+const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 const ws = require('websocket-stream');
 const http = require('http');
@@ -156,6 +157,7 @@ app.get('/get_IP', (req, res) => {
 })();
 });
 
+//画像を保存する関数
 function saveImage(image,topic){
     const filename=Object.keys(image)[0];
     const imageData=Buffer.from(image[filename],'base64');
@@ -180,6 +182,54 @@ function saveImage(image,topic){
         }
     });
 }
+//Devicedataをcsvに保存する関数
+function saveToDeviceDataCSV(deviceData){
+    const mqttDir="mqtt/deviceData";
+    const lastThreeDigits = deviceData.ID.split('.').pop();
+    const filePath=path.join(mqttDir,lastThreeDigits+".csv");
+    
+    if (!fs.existsSync(mqttDir)){
+        fs.mkdirSync(mqttDir,{recursive: true});
+    }
+    const fileExists = fs.existsSync(filePath);
+    
+    const csvWriter = createCsvWriter({
+        path:filePath,
+        header:[
+            {id:"group",title:"Group"},
+            {id:"ID",title:"ID"},
+            {id:"step",title:"Step"},
+            {id:"distance",title:"Distance"},
+            {id:"azimuth",title:"Azimuth"},
+            {id:"transitTime",title:"TransitTime"},
+            {id:"accept",title:"Accept"},
+            {id:"reject",title:"Reject"},
+            {id:"boids",title:"Boids"},
+            {id:"randomRot",title:"RandomRot"},
+            {id:"x",title:"x"},
+            {id:"y",title:"y"},
+        ],
+        append: fileExists
+    });
+    const records={
+        group: deviceData.Group,
+        ID: deviceData.ID,
+        step: deviceData.Step,
+        distance: deviceData.Distance,
+        azimuth: deviceData.Azimuth,
+        transitTime: deviceData.TransitTime,
+        accept: deviceData.Accept,
+        reject: deviceData.Reject,
+        boids: deviceData.Boids,
+        randomRot: deviceData.RandomRot,
+        x: deviceData.x,
+        y: deviceData.y,
+    };
+    csvWriter.writeRecords([records])
+        .then(()=>{console.log("The CSV file was written successfully");})
+        .catch((err)=>{console.log(err);});
+}
+
 
 const IPnowArray=[];
 let RobotStatus={};
@@ -226,11 +276,14 @@ client_mqtt.on('message', (topic,message)=> {
      if (topic.includes("DeviceData")){
         const messagestring=message.toString();
         DeviceData=JSON.parse(messagestring);
+        const IP=topic.split("/")[1];
         // console.log(DeviceData);
-        if (reddata[DeviceData.ID]){
-            reddata[DeviceData.ID].DeviceData=DeviceData;
+        if (reddata[IP]){
+            reddata[IP].DeviceData=DeviceData;
+            saveToDeviceDataCSV(DeviceData);
         }
         // console.log(messagestring);
+
     }
     if (topic.includes("Obstacle")){
         const messagestring=message.toString();
