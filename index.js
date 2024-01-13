@@ -37,7 +37,7 @@ aedes.on('clientDisconnect', function (client) {
 });
 
 // const client_mqtt=mqtt.connect('mqtt://broker.emqx.io:1883',{clientId:'app'});
-const client_mqtt=mqtt.connect('mqtt://localhost:1883',{clientId:'app'})
+const client_mqtt=mqtt.connect('mqtt://localhost:1883',{clientId:'appback'})
 //安藤さんのPCのIPアドレスにする
 // const client_mqtt=mqtt.connect('mqtt://192.168.1.113:1883',{clientId:'app'});
 
@@ -222,8 +222,8 @@ function saveToDeviceDataCSV(deviceData){
         reject: deviceData.Reject,
         boids: deviceData.Boids,
         randomRot: deviceData.RandomRot,
-        x: deviceData.x,
-        y: deviceData.y,
+        x: deviceData.Xcoord,
+        y: deviceData.Ycoord,
     };
     csvWriter.writeRecords([records])
         .then(()=>{console.log("The CSV file was written successfully");})
@@ -311,7 +311,7 @@ client_mqtt.on('message', (topic,message)=> {
         
         FloorImage=Floor_dict;
         // console.log(FloorImage);
-        saveImage(Floor_dict,topic);
+        // saveImage(Floor_dict,topic);
     }
     if(topic.includes("Param")){
         const messagestring=message.toString();
